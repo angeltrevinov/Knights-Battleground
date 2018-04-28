@@ -32,11 +32,11 @@ public class Assets {
     public static BufferedImage DoradoEspadaDer[], DoradoEspadaIzq[],
             DoradoEspadaAtkDer[], DoradoEspadaAtkIzq[]; /* Arreglo con sprites 
     para animaciones*/
-    public static BufferedImage DoradoEspadaDerParado, DoradoEspadaIzqParado; 
+    public static BufferedImage DoradoEspadaDerParado, DoradoEspadaIzqParado, DoradoEspadaBrincoIzq, DoradoEspadaBrincoDer; 
     
     public static BufferedImage CafeAchaDer[], CafeAchaIzq[], CafeAchaAtkDer[],
             CafeAchaAtkIzq[]; //Arreglo con sprites para animaciones
-    public static BufferedImage CafeAchaDerParado, CafeAchaIzqParado; 
+    public static BufferedImage CafeAchaDerParado, CafeAchaIzqParado, CafeAchaBrincoIzq, CafeAchaBrincoDer; 
     
     public static BufferedImage GrisLanzaDer[], GrisLanzaIzq[]; //Arreglo con sprites para animaciones
     public static BufferedImage GrisLanzaDerParado, GrisLanzaIzqParado;
@@ -65,9 +65,13 @@ public class Assets {
         
         DoradoEspadaDerParado = ImageLoader.loadImage("/DoradoEspada/_IDLE_000.png");
         DoradoEspadaIzqParado = ImageLoader.loadImage("/DoradoEspada/_IDLEIZQ_000.png");
+        DoradoEspadaBrincoIzq = ImageLoader.loadImage("/DoradoEspada/_JUMPIZQ_001.png");
+        DoradoEspadaBrincoDer = ImageLoader.loadImage("/DoradoEspada/_JUMP_001.png");
         
         CafeAchaDerParado = ImageLoader.loadImage("/CafeAcha/_IDLE_000.png");
         CafeAchaIzqParado = ImageLoader.loadImage("/CafeAcha/_IDLEIZQ_000.png");
+        CafeAchaBrincoIzq = ImageLoader.loadImage("/CafeAcha/_JUMPIZQ_001.png");
+        CafeAchaBrincoDer = ImageLoader.loadImage("/CafeAcha/_JUMP_001.png");
         
         GrisLanzaDerParado = ImageLoader.loadImage("/GrisLanza/_IDLE_000.png");
         GrisLanzaIzqParado = ImageLoader.loadImage("/GrisLanza/_IDLEIZQ_000.png");
@@ -88,6 +92,7 @@ public class Assets {
         for(int i = 0; i <= 6; i++){
             imgBackground[i] = ImageLoader.loadImage("/Images/" + i + ".png");
             imgFightBG[i] = ImageLoader.loadImage("/images/arena" + (i + 1) + ".png");
+            
             DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00" 
                     + i + ".png");
             DoradoEspadaIzq[i] = ImageLoader.loadImage("/DoradoEspada/_RunIzq_00"
@@ -170,4 +175,21 @@ public class Assets {
         }
         return null;
     }   
+        static BufferedImage AnimationJumpIzq(String name){
+        if(name == "DoradoEspada"){
+            return DoradoEspadaBrincoIzq;
+        }else if (name == "CafeAcha"){
+            return CafeAchaBrincoIzq;
+        }
+        return null;
+    }
+    
+    static BufferedImage AnimationJumpDer(String name){
+        if(name == "DoradoEspada"){
+            return DoradoEspadaBrincoDer;
+        }else if (name == "CafeAcha"){
+            return CafeAchaBrincoDer;
+        }
+        return null;
+    }
 }

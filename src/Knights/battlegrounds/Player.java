@@ -29,6 +29,9 @@ public class Player extends Item {
     private int Direction;      //direccion del jugador
     private String mono; 
     private GamePadController Controller;
+    private int VelocidadX = 0, VelocidadY = -6;
+    private boolean brinco = false;
+    private int ticks = 0;
     
     /**
      * Player
@@ -146,16 +149,34 @@ public class Player extends Item {
         this.animationLeft.tick();
         this.animationRight.tick();
         
-        //si el numero del jugador corresponde al numero del control
+        ticks += 1;
+        //gravedad
+        
+        setiY(getiY() - VelocidadY);
+        
+        
+        if(getiY() + getiHeight() + 60 >= getGaGame().getiHeight()){
+            brinco = false;
+        }else if(brinco && VelocidadY >= -6 && (ticks % 5) == 1){
+            VelocidadY -= 4;
+        }
+ 
+        
         if(getiTypePlayer() == Controller.getiNumController()){
-
+                       
             //mover al jugador en y
             if(Controller.getLXYDir() == Controller.getNORTH()){ //hacia arriba
-
-                setiY(getiY() - 10);
+                if(brinco == false){
+                    brinco = true;
+                    VelocidadY += 25;
+                    setMoving(false);
+                }
+ 
+            }else{
                 setMoving(true);
-
-            }else if(Controller.getLXYDir() == Controller.getSOUTH()){//hacia abajo
+            }
+            
+            if(Controller.getLXYDir() == Controller.getSOUTH()){//hacia abajo
 
                 setiY(getiY() + 10); 
                 setMoving(true);
@@ -164,44 +185,64 @@ public class Player extends Item {
 
             //mover al jugador en x
             if(Controller.getLXYDir() == Controller.getEAST()){//a la derecha
-
-                setiX(getiX() + 5);
+                /*
+                if(getiY() + getiHeight()+120 >= getGaGame().getiHeight() && !brinco){
+                    VelocidadX = 0;
+                     setiX(getiX() + 6);
+                }else if(ticks % 5 == 1 && VelocidadX < 6 && brinco){
+                    VelocidadX += 6;
+                } 
+                */
+                setiX(getiX() + 6);
                 setDirection(1);
                 setMoving(true);
 
             }else if(Controller.getLXYDir() == Controller.getWEST()){ //a la izquierda
-
-                setiX(getiX() - 5);
+                /*
+                if(getiY() + getiHeight()+120 >= getGaGame().getiHeight() && !brinco){
+                     VelocidadX = 0;
+                     setiX(getiX() - 6);
+                }else if(ticks % 5 == 1 && VelocidadX > -6 && brinco){
+                    VelocidadX -= 6;
+                }
+                */
+                setiX(getiX() - 6);
                 setDirection(-1);
                 setMoving(true);
             }
 
             //mover al jugador en diagonal
             if(Controller.getLXYDir() == Controller.getNW()){ //arriba a la izquierda
-
-                setiY(getiY() - 10);
-                setiX(getiX() - 5);
+                setiX(getiX() - 6);
+                if(brinco == false){
+                    brinco = true;
+                    VelocidadY += 25;
+                    setMoving(false);
+                }
                 setDirection(-1);
                 setMoving(true); 
 
             }else if(Controller.getLXYDir() == Controller.getNE()){//arriba a la derecha
-
-                setiY(getiY() - 10);
-                setiX(getiX() + 5);
+                setiX(getiX() + 5); 
+                if(brinco == false){
+                    brinco = true;
+                    VelocidadY += 25;
+                    setMoving(false);
+                }
                 setDirection(1);
                 setMoving(true);  
 
             }else if(Controller.getLXYDir()== Controller.getSW()){ //abajo a la izquierda
 
-                setiY(getiY() + 10);
-                setiX(getiX() - 5);
+                //setiY(getiY() + 10);
+                //setiX(getiX() - 5);
                 setDirection(-1);
                 setMoving(true); 
 
             }else if(Controller.getLXYDir() == Controller.getSE()){ //abajo a la derecha
 
-                setiY(getiY() + 10);
-                setiX(getiX() + 5);
+                //setiY(getiY() + 10);
+                //setiX(getiX() + 5);
                 setDirection(1);
                 setMoving(true); 
 
@@ -233,9 +274,9 @@ public class Player extends Item {
 
             }
             //colision con los borden en y 
-            if(getiY() + getiHeight()+120 >= getGaGame().getiHeight()){ 
+            if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
 
-                setiY(getGaGame().getiHeight() - getiHeight()-120);
+                setiY(getGaGame().getiHeight() - getiHeight()- 60);
 
             }else if(getiY() <= 0){
 
@@ -247,6 +288,8 @@ public class Player extends Item {
             if(Controller.getLXYDir() == Controller.getNONE()){
 
                 setMoving(false);
+                
+                
 
             }
 
@@ -267,8 +310,18 @@ public class Player extends Item {
      */
     @Override
     public void render(Graphics gGraphics) {
-            
+        
+        
+        if(brinco == true && (getDirection() == -1) && !Attack){
+            gGraphics.drawImage(Assets.AnimationJumpIzq(mono), getiX(), getiY(),
+                        getiWidth(), getiHeight(), null);
+        }else if(brinco == true && (getDirection() == 1) && !Attack){
+            gGraphics.drawImage(Assets.AnimationJumpDer(mono), getiX(), getiY(),
+                        getiWidth(), getiHeight(), null);
+        }
         //animacion de ataque a la derecha 
+        
+        
         if(isAttack() && (getDirection() == 1)){
 
             gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
@@ -279,25 +332,25 @@ public class Player extends Item {
             gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
 
-        }else if(isMoving() && getDirection() == 1){ //moviendo a la derecha
+        }else if(isMoving() && getDirection() == 1 && !brinco){ //moviendo a la derecha
 
             gGraphics.drawImage(animationRight.getCurrentFrame(), getiX(), getiY(), 
                 getiWidth(), getiHeight(), null);
 
-        }else if(isMoving() && getDirection() == -1){//moviendo a la izquierda
+        }else if(isMoving() && getDirection() == -1 && !brinco){//moviendo a la izquierda
 
             gGraphics.drawImage(animationLeft.getCurrentFrame(), getiX(), getiY(), 
                 getiWidth(), getiHeight(), null);
 
-        }else if(!isMoving() && getDirection() == 1){  //parado a la derecha
+        }else if(!isMoving() && getDirection() == 1 && !brinco){  //parado a la derecha
 
             gGraphics.drawImage(Assets.ParadoDer(mono), getiX(), getiY(),
                         getiWidth(), getiHeight(), null);
 
-        }else if(!isMoving() && getDirection() == -1){ //parado a la izquierda
+        }else if(!isMoving() && getDirection() == -1 && !brinco){ //parado a la izquierda
             gGraphics.drawImage(Assets.ParadoIzq(mono), getiX(), getiY(), 
                         getiWidth(), getiHeight(), null);
         }
         
-    }//para el render
+    }//para render
 }//para toda la clase
