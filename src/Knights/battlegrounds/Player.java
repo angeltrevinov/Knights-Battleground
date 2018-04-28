@@ -155,7 +155,7 @@ public class Player extends Item {
         setiY(getiY() - VelocidadY);
         
         
-        if(getiY() + getiHeight()+120 >= getGaGame().getiHeight()){
+        if(getiY() + getiHeight() + 60 >= getGaGame().getiHeight()){
             brinco = false;
         }else if(brinco && VelocidadY >= -6 && (ticks % 5) == 1){
             VelocidadY -= 4;
@@ -274,9 +274,9 @@ public class Player extends Item {
 
             }
             //colision con los borden en y 
-            if(getiY() + getiHeight()+120 >= getGaGame().getiHeight()){ 
+            if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
 
-                setiY(getGaGame().getiHeight() - getiHeight()-120);
+                setiY(getGaGame().getiHeight() - getiHeight()- 60);
 
             }else if(getiY() <= 0){
 
