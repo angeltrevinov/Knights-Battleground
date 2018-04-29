@@ -209,13 +209,13 @@ public class Game implements Runnable{
         Controllers = new ArrayList<GamePadController>();
         animationBG = new Animation(Assets.imgBackground, 120);
         fightanimation = new Animation(Assets.imgFightBG, 120);
-        for(int i = 0; i < 1; i++){ //inserta todos los controles necesairos
+        for(int i = 0; i < getiNumPlayers(); i++){ //inserta todos los controles necesairos
             GamePadController Controller = new GamePadController(i);
             Controllers.add(Controller);
         }
         
         Players = new ArrayList<Player>();
-        for(int i = 0; i < 1; i++){ //solo crea una lista con los juadores
+        for(int i = 0; i < getiNumPlayers(); i++){ //solo crea una lista con los juadores
             
             Player player = new Player((getiWidth() /2 ) - 100, 
                     (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i));
@@ -285,13 +285,16 @@ public class Game implements Runnable{
 
                     Player player2 = (Player) itr2.next(); 
                     //interseccion entre objetos
+                    player2.setHit(false);
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
-
-                    }else{
-
+                        player2.setHit(true);
+                        player2.setSalud(player2.getSalud() + 1);
                     }
-
+                    //se muere
+                    if(player2.getSalud() > 93){
+                        player2.setHit(true);
+                    }
                 }
             }
         }else if(state == STATE.Start){
