@@ -5,7 +5,6 @@
  */
 package Knights.battlegrounds;
 
-import Knights.battlegrounds.Game.STATE;
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.util.concurrent.ThreadLocalRandom;
