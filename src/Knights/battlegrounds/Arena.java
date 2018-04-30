@@ -5,7 +5,6 @@
  */
 package Knights.battlegrounds;
 
-import Knights.battlegrounds.Game.STATE;
 import static java.awt.Color.red;
 import java.awt.Graphics;
 import java.awt.Shape;
