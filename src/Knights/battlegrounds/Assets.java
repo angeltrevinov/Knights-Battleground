@@ -39,7 +39,7 @@ public class Assets {
             CafeAchaAtkIzq[], CafeAchaDerAtc[], CafeAchaIzqAtc[]; //Arreglo con sprites para animaciones
     
     public static BufferedImage CafeAchaDerParado, CafeAchaIzqParado, CafeAchaBrincoIzq, CafeAchaBrincoDer, 
-            CafeAchaDerParadoAtc, CafeAchaIzqParadoAtc; 
+            CafeAchaDerParadoAtc, CafeAchaIzqParadoAtc, CafeAchaDerBrincoAtc, CafeAchaIzqBrincoAtc; 
     
     public static BufferedImage GrisLanzaDer[], GrisLanzaIzq[]; //Arreglo con sprites para animaciones
     public static BufferedImage GrisLanzaDerParado, GrisLanzaIzqParado;
@@ -70,6 +70,7 @@ public class Assets {
         DoradoEspadaIzqParado = ImageLoader.loadImage("/DoradoEspada/_IDLEIZQ_000.png");
         DoradoEspadaBrincoIzq = ImageLoader.loadImage("/DoradoEspada/_JUMPIZQ_001.png");
         DoradoEspadaBrincoDer = ImageLoader.loadImage("/DoradoEspada/_JUMP_001.png");
+        
         DoradoEspadaDerParadoAtc = ImageLoader.loadImage("/DoradoEspada/IDLEDER.png");
         DoradoEspadaIzqParadoAtc = ImageLoader.loadImage("/DoradoEspada/IDLEIZQ.png");
         DoradoEspadaDerBrincoAtc = ImageLoader.loadImage("/DoradoEspada/_JUMPDERATC_001.png");
@@ -80,6 +81,11 @@ public class Assets {
         CafeAchaIzqParado = ImageLoader.loadImage("/CafeAcha/_IDLEIZQ_000.png");
         CafeAchaBrincoIzq = ImageLoader.loadImage("/CafeAcha/_JUMPIZQ_001.png");
         CafeAchaBrincoDer = ImageLoader.loadImage("/CafeAcha/_JUMP_001.png");
+        
+        CafeAchaDerParadoAtc = ImageLoader.loadImage("/CafeAcha/ParadoAtcDer.png");
+        CafeAchaIzqParadoAtc = ImageLoader.loadImage("/CafeAcha/ParadoAtcIzq.png");
+        CafeAchaDerBrincoAtc = ImageLoader.loadImage("/CafeAcha/BrincoAtcDer.png");
+        CafeAchaIzqBrincoAtc = ImageLoader.loadImage("/CafeAcha/BrincoAtcIzq.png");
         
         GrisLanzaDerParado = ImageLoader.loadImage("/GrisLanza/_IDLE_000.png");
         GrisLanzaIzqParado = ImageLoader.loadImage("/GrisLanza/_IDLEIZQ_000.png");
@@ -94,8 +100,9 @@ public class Assets {
         CafeAchaDer = new BufferedImage[7];
         CafeAchaDerAtc = new BufferedImage[7];
         CafeAchaIzq = new BufferedImage[7];
-        CafeAchaAtkDer = new BufferedImage[7];
-        CafeAchaAtkIzq = new BufferedImage[7];
+        CafeAchaIzqAtc = new BufferedImage[7];
+        CafeAchaAtkDer = new BufferedImage[8];
+        CafeAchaAtkIzq = new BufferedImage[8];
    
         GrisLanzaDer = new BufferedImage[7];
         GrisLanzaIzq = new BufferedImage[7];
@@ -105,6 +112,12 @@ public class Assets {
                     + i + ".png");
             
             DoradoEspadaAtkIzq[i] = ImageLoader.loadImage("/DoradoEspada/AtacarIzq_000"
+                    + i + ".png");
+            
+            CafeAchaAtkDer[i] = ImageLoader.loadImage("/CafeAcha/AtacarDer_000"
+                    + i + ".png");
+            
+            CafeAchaAtkIzq[i] = ImageLoader.loadImage("/CafeAcha/AtacarIzq_000"
                     + i + ".png");
                     
         }
@@ -128,9 +141,10 @@ public class Assets {
                     + ".png");
             CafeAchaIzq[i] = ImageLoader.loadImage("/CafeAcha/_RunIzq_00" + i + 
                     ".png");
-            CafeAchaAtkDer[i] = ImageLoader.loadImage("/CafeAcha/_ATTACK_00" + i
+            
+            CafeAchaDerAtc[i] = ImageLoader.loadImage("/CafeAcha/CorrerAtcDer_000" + i
                     + ".png");
-            CafeAchaAtkIzq[i] = ImageLoader.loadImage("/CafeAcha/_ATTACKIzq_00" 
+            CafeAchaIzqAtc[i] = ImageLoader.loadImage("/CafeAcha/CorrerAtcIzq_000" 
                     + i + ".png");
             
             GrisLanzaDer[i] = ImageLoader.loadImage("/GrisLanza/_Run_00" + i + 
@@ -252,7 +266,7 @@ public class Assets {
         if(name == "DoradoEspada"){
             return DoradoEspadaDerBrincoAtc;
         }else if (name == "CafeAcha"){
-            
+            return CafeAchaDerBrincoAtc;
         }
         return null;
     }
@@ -261,7 +275,7 @@ public class Assets {
         if(name == "DoradoEspada"){
             return DoradoEspadaIzqBrincoAtc;
         }else if (name == "CafeAcha"){
-            
+            return CafeAchaIzqBrincoAtc;
         }
         return null;
     }

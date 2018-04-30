@@ -59,7 +59,7 @@ public class Player extends Item {
         this.iTypePlayer = iTypePlayer;
         this.Controller = Controller;
         if(iTypePlayer == 0){
-            mono = "DoradoEspada";
+            mono = "CafeAcha";
         }else if(iTypePlayer == 1){
             mono = "CafeAcha";
         }
@@ -227,6 +227,8 @@ public class Player extends Item {
         this.animationLeft.tick();
         this.animationRight.tick();
         
+        
+        
         setTicks(getTicks() + 1);
         //gravedad
         
@@ -314,6 +316,7 @@ public class Player extends Item {
                     && (Direction == 1)){
                 this.animationDerAtc.tick();
                 this.animationAtkDer.tick();
+        
                 setAttack(true);
 
             }else if(Controller.isButtonPressed(Controller.getButtonA()) 
@@ -384,7 +387,7 @@ public class Player extends Item {
     @Override
     public void render(Graphics gGraphics) {
         
-        
+        //animacion de brinco, y ataque con brinco
         if(brinco == true && (getDirection() == -1) && !Attack){
             
             gGraphics.drawImage(Assets.AnimationJumpIzq(mono), getiX(), getiY(),
