@@ -23,10 +23,14 @@ public class Assets {
     public static BufferedImage imgStart;
     public static BufferedImage imgHighScore;
     public static BufferedImage imgNewGame;
+    public static BufferedImage imgquit;
+    public static BufferedImage imgPause;
     public static BufferedImage Settings;
-    public static BufferedImage img1v1;
+    public static BufferedImage img1v1, img2v2;
+    public static BufferedImage imgffa;
     public static BufferedImage imgFightBG[];
-   
+    public static BufferedImage imgFightBG2[];
+    public static BufferedImage imgFightBG3[];
 
     
     public static BufferedImage DoradoEspadaDer[], DoradoEspadaIzq[],
@@ -61,11 +65,15 @@ public class Assets {
         imgHighScore = ImageLoader.loadImage("/images/HighScore.png");
         imgNewGame = ImageLoader.loadImage("/images/NEwGame.png");
         Settings = ImageLoader.loadImage("/images/settings.png");
-        img1v1 = ImageLoader.loadImage("/images/1v1.png");
+        img1v1 = ImageLoader.loadImage("/images/1vs1.png");
+        img2v2 = ImageLoader.loadImage("/Images/2vs2.png");
+        imgffa = ImageLoader.loadImage("/Images/ffa.png");
+        imgquit = ImageLoader.loadImage("/images/quitgame.png");
+        imgPause = ImageLoader.loadImage("/Images/pausa.png");
         imgFightBG = new BufferedImage[8];
-        
-        
-        
+        imgFightBG2 = new BufferedImage[4];
+        imgFightBG3 = new BufferedImage[32];
+       
         DoradoEspadaDerParado = ImageLoader.loadImage("/DoradoEspada/_IDLE_000.png");
         DoradoEspadaIzqParado = ImageLoader.loadImage("/DoradoEspada/_IDLEIZQ_000.png");
         DoradoEspadaBrincoIzq = ImageLoader.loadImage("/DoradoEspada/_JUMPIZQ_001.png");
@@ -108,19 +116,14 @@ public class Assets {
                     + i + ".png");          
         }
         
-        for(int i =0; i <= 7; i++){
-            DoradoEspadaAtkDer[i] = ImageLoader.loadImage("/DoradoEspada/Atacar_000"
-                    + i + ".png");
-            
-            DoradoEspadaAtkIzq[i] = ImageLoader.loadImage("/DoradoEspada/AtacarIzq_000"
-                    + i + ".png");
-                    
-        }
         for(int i = 0; i <= 6; i++){
+            if( i < 4){
+                imgFightBG2[i] = ImageLoader.loadImage("/Images/batalla2_" + i + ".png");
+            }
+            imgFightBG3[i] = ImageLoader.loadImage("/images/frame_" + i +".png");
             imgBackground[i] = ImageLoader.loadImage("/Images/" + i + ".png");
             imgFightBG[i] = ImageLoader.loadImage("/images/arena" + (i + 1) + ".png");
-            
-            DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00" 
+DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00" 
                     + i + ".png");
             
             DoradoEspadaIzq[i] = ImageLoader.loadImage("/DoradoEspada/_RunIzq_00"
@@ -146,6 +149,9 @@ public class Assets {
             GrisLanzaIzq[i] = ImageLoader.loadImage("/GrisLanza/_RunIzq_00" + i 
                     + ".png");
 
+        }
+        for(int i = 7; i <= 31; i++){
+          imgFightBG3[i] = ImageLoader.loadImage("/images/frame_" + i +".png");  
         }
         imgBackground[7] = ImageLoader.loadImage("/Images/7.png");
         imgFightBG[7] = ImageLoader.loadImage("/Images/arena8.png");
