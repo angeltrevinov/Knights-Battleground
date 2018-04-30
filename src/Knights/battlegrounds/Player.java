@@ -29,9 +29,13 @@ public class Player extends Item {
     private int Direction;      //direccion del jugador
     private String mono; 
     private GamePadController Controller;
-    private int VelocidadX = 0, VelocidadY = -6;
-    private boolean brinco = false;
-    private int ticks = 0;
+    private int VelocidadX;
+    private int VelocidadY;
+    private boolean brinco;
+    private int ticks;
+    private boolean hit;
+    private int salud;  //su salud
+    private boolean dead; 
     
     /**
      * Player
@@ -65,7 +69,76 @@ public class Player extends Item {
         Direction = 1;
         Moving = false;
         Attack = false; 
+        VelocidadX = 0;
+        VelocidadY = -6;
+        brinco = false;
+        ticks = 0;
+        hit = false;
+        salud = 0;
+        dead = false;
     }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public int getSalud() {
+        return salud;
+    }
+
+    public void setSalud(int salud) {
+        this.salud = salud;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
+    }
+
+    public GamePadController getController() {
+        return Controller;
+    }
+    
+    public int getVelocidadX() {
+        return VelocidadX;
+    }
+
+    public void setVelocidadX(int VelocidadX) {
+        this.VelocidadX = VelocidadX;
+    }
+
+    public int getVelocidadY() {
+        return VelocidadY;
+    }
+
+    public void setVelocidadY(int VelocidadY) {
+        this.VelocidadY = VelocidadY;
+    }
+
+    public boolean isBrinco() {
+        return brinco;
+    }
+
+    public void setBrinco(boolean brinco) {
+        this.brinco = brinco;
+    }
+
+    public int getTicks() {
+        return ticks;
+    }
+
+    public void setTicks(int ticks) {
+        this.ticks = ticks;
+    }
+    
+    
     
     /**
      * isAttack
@@ -149,97 +222,80 @@ public class Player extends Item {
         this.animationLeft.tick();
         this.animationRight.tick();
         
-        ticks += 1;
+        setTicks(getTicks() + 1);
         //gravedad
         
-        setiY(getiY() - VelocidadY);
+        setiY(getiY() - getVelocidadY());
+        setiX(getiX() - getVelocidadX());
         
         
         if(getiY() + getiHeight() + 60 >= getGaGame().getiHeight()){
-            brinco = false;
-        }else if(brinco && VelocidadY >= -6 && (ticks % 5) == 1){
-            VelocidadY -= 4;
+            setBrinco(false);
+        }else if(isBrinco() && getVelocidadY() >= -6 && (getTicks() % 5) == 1){
+            setVelocidadY(getVelocidadY() - 4);
         }
  
         
-        if(getiTypePlayer() == Controller.getiNumController()){
+        if(getiTypePlayer() == getController().getiNumController()){
                        
             //mover al jugador en y
-            if(Controller.getLXYDir() == Controller.getNORTH()){ //hacia arriba
-                if(brinco == false){
-                    brinco = true;
-                    VelocidadY += 25;
+            if(getController().getLXYDir() == getController().getNORTH()){ //hacia arriba
+                if(!isBrinco()){
+                    setBrinco(true);
+                    setVelocidadY(getVelocidadY()+25);
                     setMoving(false);
                 }
  
             }else{
                 setMoving(true);
             }
-            
-            if(Controller.getLXYDir() == Controller.getSOUTH()){//hacia abajo
+            if(getController().getLXYDir() == getController().getSOUTH()){//hacia abajo
 
                 setiY(getiY() + 10); 
                 setMoving(true);
 
-            }
-
-            //mover al jugador en x
-            if(Controller.getLXYDir() == Controller.getEAST()){//a la derecha
-                /*
-                if(getiY() + getiHeight()+120 >= getGaGame().getiHeight() && !brinco){
-                    VelocidadX = 0;
-                     setiX(getiX() + 6);
-                }else if(ticks % 5 == 1 && VelocidadX < 6 && brinco){
-                    VelocidadX += 6;
-                } 
-                */
-                setiX(getiX() + 6);
+            }else if(getController().getLXYDir() == getController().getEAST()){//a la derecha
+                
+                setiX(getiX() + 5);
                 setDirection(1);
                 setMoving(true);
 
-            }else if(Controller.getLXYDir() == Controller.getWEST()){ //a la izquierda
-                /*
-                if(getiY() + getiHeight()+120 >= getGaGame().getiHeight() && !brinco){
-                     VelocidadX = 0;
-                     setiX(getiX() - 6);
-                }else if(ticks % 5 == 1 && VelocidadX > -6 && brinco){
-                    VelocidadX -= 6;
-                }
-                */
-                setiX(getiX() - 6);
+            }else if(getController().getLXYDir() == getController().getWEST()){ //a la izquierda
+                
+                setiX(getiX() - 5);
                 setDirection(-1);
                 setMoving(true);
-            }
+            }else
 
             //mover al jugador en diagonal
-            if(Controller.getLXYDir() == Controller.getNW()){ //arriba a la izquierda
-                setiX(getiX() - 6);
-                if(brinco == false){
-                    brinco = true;
-                    VelocidadY += 25;
+            if(getController().getLXYDir() == getController().getNW()){ //arriba a la izquierda
+                setiX(getiX() - 5);
+                if(!isBrinco()){
+                    setBrinco(true);
+                    setVelocidadY(getVelocidadY() + 25);
                     setMoving(false);
                 }
                 setDirection(-1);
                 setMoving(true); 
 
-            }else if(Controller.getLXYDir() == Controller.getNE()){//arriba a la derecha
+            }else if(getController().getLXYDir() == getController().getNE()){//arriba a la derecha
                 setiX(getiX() + 5); 
-                if(brinco == false){
-                    brinco = true;
-                    VelocidadY += 25;
+                if(!isBrinco()){
+                    setBrinco(true);
+                    setVelocidadY(getVelocidadY() +25);
                     setMoving(false);
                 }
                 setDirection(1);
                 setMoving(true);  
 
-            }else if(Controller.getLXYDir()== Controller.getSW()){ //abajo a la izquierda
+            }else if(getController().getLXYDir()== getController().getSW()){ //abajo a la izquierda
 
                 //setiY(getiY() + 10);
                 //setiX(getiX() - 5);
                 setDirection(-1);
                 setMoving(true); 
 
-            }else if(Controller.getLXYDir() == Controller.getSE()){ //abajo a la derecha
+            }else if(getController().getLXYDir() == getController().getSE()){ //abajo a la derecha
 
                 //setiY(getiY() + 10);
                 //setiX(getiX() + 5);
@@ -264,38 +320,50 @@ public class Player extends Item {
             }           
 
             //colision con los bordes de la pantalla en x
-            if(getiX() + getiWidth() >= getGaGame().getiWidth()){
+            if(getiX() >= getGaGame().getiWidth() || getiX() <= -98){
 
-                setiX(getGaGame().getiWidth() - getiWidth());
-
-            }else if(getiX() <= 0){
-
-                setiX(0);
+                setDead(true);
 
             }
+            
             //colision con los borden en y 
             if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
 
                 setiY(getGaGame().getiHeight() - getiHeight()- 60);
+                
+            }else if(getiY() <= -130){
 
-            }else if(getiY() <= 0){
-
-                setiY(0);
+                setDead(true);
 
             }
+             
 
             //por si no se esta moviendo
             if(Controller.getLXYDir() == Controller.getNONE()){
 
                 setMoving(false);
-                
-                
 
             }
 
             //para desactivar el ataque
             if(!Controller.isButtonPressed(Controller.getButtonA())){
                 setAttack(false);
+            }
+            
+            //para que se muera
+            if(isHit()){
+                setVelocidadX( getDirection() * getSalud()*2 );
+                setiY(getiY()  - getSalud()*4);
+            }else if(!isHit() && (getTicks() % 7) == 1){
+                setVelocidadX(0);
+            }
+            
+            //para resetear al personaje para cuando muera
+            if(isDead()){
+                setiX(getGaGame().getiWidth()/2 - 100 * getiTypePlayer());
+                setiY(10);
+                setSalud(0);
+                setDead(false);
             }
 
         }
