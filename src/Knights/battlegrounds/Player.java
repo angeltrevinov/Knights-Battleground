@@ -353,8 +353,8 @@ public class Player extends Item {
             //para que se muera
             if(isHit()){
                 setVelocidadX( getDirection() * getSalud()*2 );
-                setiY(getiY()  - getSalud()*2);
-            }else if(!isHit()){
+                setiY(getiY()  - getSalud()*4);
+            }else if(!isHit() && (getTicks() % 7) == 1){
                 setVelocidadX(0);
             }
             
