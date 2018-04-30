@@ -371,9 +371,12 @@ public class Game implements Runnable{
                     //interseccion entre objetos
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
-
-                    }else{
-
+                        player2.setHit(true);
+                        player2.setSalud(player2.getSalud() + 1);
+                    }
+                    //se muere
+                    if(player2.getSalud() > 93){
+                        player2.setHit(true);
                     }
 
                 }
