@@ -79,7 +79,7 @@ public class Game implements Runnable{
         
     };
     
-    private STATE state = STATE.Start;
+    private STATE state = STATE.MENU;
     
     private void setStateGame(){
         state = STATE.GAME;
