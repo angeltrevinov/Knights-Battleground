@@ -31,6 +31,13 @@ public class Assets {
     public static BufferedImage imgFightBG[];
     public static BufferedImage imgFightBG2[];
     public static BufferedImage imgFightBG3[];
+    
+    public static SoundClip select;
+    public static SoundClip selectBack;
+    public static SoundClip start;
+    public static SoundClip menumusic;
+    public static SoundClip navigate;
+    public static SoundClip battle1;
 
     
     public static BufferedImage DoradoEspadaDer[], DoradoEspadaIzq[],
@@ -55,6 +62,13 @@ public class Assets {
      * funcion que inicializa los assets
      */
     public static void init(){
+        
+        menumusic = new SoundClip("/Sounds/menu.wav");
+        navigate = new SoundClip("/Sounds/navigate.wav");
+        select = new SoundClip("/Sounds/select.wav");
+        selectBack = new SoundClip("/Sounds/selectback.wav");
+        start = new SoundClip("/Sounds/start.wav");
+        battle1 = new SoundClip("/Sounds/battle1.wav");
         
         //Imagenes son cargadas en su respectiva variable
         imgBackground = new BufferedImage[8];

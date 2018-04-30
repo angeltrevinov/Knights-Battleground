@@ -50,15 +50,16 @@ public class Game implements Runnable{
     private Animation fightanimation;
     private Animation fightanimation2;
     private Animation fightanimation3;
-    private SoundClip menumusic;
-    private SoundClip navigate;
-    private SoundClip battle1;
     public STATE state;
+    private Random r;
+    private int random;
+    
     private SoundClip select;
     private SoundClip selectBack;
     private SoundClip start;
-    private Random r;
-    private int random;
+    private SoundClip menumusic;
+    private SoundClip navigate;
+    private SoundClip battle1;
     
     /**
      * Constructor de Game
@@ -99,8 +100,8 @@ public class Game implements Runnable{
     }
     public void setStateStart(){
         state = STATE.Start;
-        menumusic.setLooping(true);
-        menumusic.play();
+        Assets.menumusic.setLooping(true);
+        Assets.menumusic.play();
 
         
     }
@@ -112,9 +113,9 @@ public class Game implements Runnable{
     
     public int setStateNewGame(Random r){
         state = STATE.newGame;
-        battle1.play();
-        battle1.setLooping(true);
-        menumusic.stop();
+        Assets.battle1.play();
+        Assets.battle1.setLooping(true);
+        Assets.menumusic.stop();
         int aux = getIntRandom(r);
         System.out.print(aux);
         state = STATE.GAME;
@@ -272,12 +273,6 @@ public class Game implements Runnable{
         fightanimation = new Animation(Assets.imgFightBG, 120);
         fightanimation2 = new Animation(Assets.imgFightBG2,60);
         fightanimation3 = new Animation(Assets.imgFightBG3,60);
-        menumusic = new SoundClip("menu.wav");
-        navigate = new SoundClip("navigate.wav");
-        select = new SoundClip("select.wav");
-        selectBack = new SoundClip("selectback.wav");
-        start = new SoundClip("start.wav");
-        battle1 = new SoundClip("battle1.wav");
         for(int i = 0; i < 1; i++){ //inserta todos los controles necesairos
             GamePadController Controller = new GamePadController(i);
             Controllers.add(Controller);
@@ -404,7 +399,7 @@ public class Game implements Runnable{
                 GamePadController Controller = (GamePadController) itr.next();
                 //para seleccionar
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
-                    start.play();
+                    Assets.start.play();
                     setStateMenu();
                     try{
                         Thread.sleep(200);
@@ -421,7 +416,7 @@ public class Game implements Runnable{
             while(itr.hasNext()){
             GamePadController Controller = (GamePadController) itr.next();
             if(Controller.isButtonPressed(Controller.getButtonB())){
-                selectBack.play();
+                Assets.selectBack.play();
                 setStateMenu();
            }
          }
@@ -433,14 +428,14 @@ public class Game implements Runnable{
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonB())){
-                    selectBack.play();
+                    Assets.selectBack.play();
                     setStateMenu();
                     
                 }
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(60);
                     setPointery2Down(60);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() > 530){
                         setPointery1(400);
                         setPointery2(400);
@@ -454,7 +449,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getNORTH()){
                     setPointery1Up(60);
                     setPointery2Up(60);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() < 390){
                         setPointery1(520);
                         setPointery2(520);
@@ -466,7 +461,7 @@ public class Game implements Runnable{
                     }
                 }
                 if(Controller.isButtonPressed(Controller.getButtonA())){
-                    select.play();
+                    Assets.select.play();
                     if(getPointery() == 400){
                         setStateModeSelection();
                     }
@@ -491,7 +486,7 @@ public class Game implements Runnable{
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
-                    select.play();
+                    Assets.select.play();
                     if(getPointery() == 435){
                         setStateModeSelection();
                     }
@@ -514,7 +509,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(50);
                     setPointery2Down(50);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() > 585){
                         setPointery1(435);
                         setPointery2(435);
@@ -528,7 +523,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getNORTH()){
                     setPointery1Up(50);
                     setPointery2Up(50);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() < 435){
                         setPointery1(585);
                         setPointery2(585);
