@@ -99,6 +99,14 @@ public class Assets {
    
         GrisLanzaDer = new BufferedImage[7];
         GrisLanzaIzq = new BufferedImage[7];
+
+        for(int i =0; i <= 7; i++){
+            DoradoEspadaAtkDer[i] = ImageLoader.loadImage("/DoradoEspada/Atacar_000"
+                    + i + ".png");
+            
+            DoradoEspadaAtkIzq[i] = ImageLoader.loadImage("/DoradoEspada/AtacarIzq_000"
+                    + i + ".png");          
+        }
         
         for(int i =0; i <= 7; i++){
             DoradoEspadaAtkDer[i] = ImageLoader.loadImage("/DoradoEspada/Atacar_000"
@@ -137,13 +145,14 @@ public class Assets {
                     ".png");
             GrisLanzaIzq[i] = ImageLoader.loadImage("/GrisLanza/_RunIzq_00" + i 
                     + ".png");
+
         }
         imgBackground[7] = ImageLoader.loadImage("/Images/7.png");
         imgFightBG[7] = ImageLoader.loadImage("/Images/arena8.png");
         
     }
     
-    static BufferedImage ParadoDer(String name){
+static BufferedImage ParadoDer(String name){
         if(name == "DoradoEspada"){
             return DoradoEspadaDerParado;
         } else if (name == "CafeAcha"){

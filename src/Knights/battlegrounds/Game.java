@@ -10,6 +10,7 @@ import java.awt.Shape;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * class Game
@@ -37,7 +38,6 @@ public class Game implements Runnable{
     
     private ArrayList<Player> Players;   //para poder utilizar mas de un jugador
     private ArrayList<GamePadController> Controllers; //varios controles
-    private Enemy eEnemy;               //para poder usar un enemigo
     private Arena aArena;               //para crear una arena
     
     private int iPointery = 435;
@@ -48,6 +48,17 @@ public class Game implements Runnable{
     
     private Animation animationBG;
     private Animation fightanimation;
+    private Animation fightanimation2;
+    private Animation fightanimation3;
+    private SoundClip menumusic;
+    private SoundClip navigate;
+    private SoundClip battle1;
+    public STATE state;
+    private SoundClip select;
+    private SoundClip selectBack;
+    private SoundClip start;
+    private Random r;
+    private int random;
     
     /**
      * Constructor de Game
@@ -69,56 +80,114 @@ public class Game implements Runnable{
         KeyManager = new KeyManager();
     }
     
-    private enum STATE{
+    public enum STATE{
         MENU,
         Start,
         GAME,
-        PAUSE,
+        Settings,
         CharacterSelection,
-        ModeSelection
+        ModeSelection,
+        Leaderboard,
+        Pause,
+        newGame
         
     };
+   
+    public void setStatePause(){
+        state = STATE.Pause;
+        
+    }
+    public void setStateStart(){
+        state = STATE.Start;
+        menumusic.setLooping(true);
+        menumusic.play();
+
+        
+    }
     
-    private STATE state = STATE.MENU;
+    public int getIntRandom(Random r){
+        int aux = r.nextInt(3-0) + 0;
+        return aux;
+    }
     
-    private void setStateGame(){
+    public int setStateNewGame(Random r){
+        state = STATE.newGame;
+        battle1.play();
+        battle1.setLooping(true);
+        menumusic.stop();
+        int aux = getIntRandom(r);
+        System.out.print(aux);
+        state = STATE.GAME;
+        return aux;
+    }
+    
+    public void setStateGame(){
         state = STATE.GAME;
     }
     
-    private void setStateMenu(){
+    public void setStateMenu(){
         state = STATE.MENU;
+        setPointerx(250);
+        setPointerx2(600);
+        setPointery1(435);
+        setPointery2(435);
 
     }
     
-    private void setStateModeSelection(){
+    public void setStateModeSelection(){
         state = STATE.ModeSelection;
-        setPointerx(900);
-        setPointery(370);
+        setPointery1(400);
+        setPointery2(400);
+        setPointerx(290);
+        setPointerx2(605);
+
+    }
+    
+    public void setStateLeaderBoard(){
+        state = STATE.Leaderboard;
+    }
+    
+    public void setStateSettings(){
+        state = STATE.Settings;
     }
     
     public void setPointerx(int iaux){
         iPointerx = iaux;
     }
     
-    public int getPointerx(){
+    public void setPointerx2(int iaux){
+        iPointerx2 = iaux;
+    }
+    
+    public int getPointerx1(){
         return iPointerx;
     }
     
-    public void setPointery(int iaux){
-        iPointery = iaux;
+    public void setPointery1Down(int iaux){
+        iPointery += iaux;
+    }
+    public void setPointery2Down(int iaux){
+        iPointery2 += iaux;
+    }
+    
+    public void setPointery1(int aux){
+        iPointery = aux;
+    }
+    
+    public void setPointery2(int aux){
+        iPointery2 = aux;
+    }
+    public void setPointery2Up(int iaux){
+        iPointery2 -= iaux;
+    }
+    public void setPointery1Up(int iaux){
+        iPointery -= iaux;
     }
     
     public int getPointery(){
         return iPointery;
     }
     
-    public void setPointeryDown(int iaux){
-        iPointery += iaux;
-    }
-    
-    public void setPointeryUp(int iaux){
-        iPointery -= iaux;
-    }
     
     /**
      * getcontrollers 
@@ -161,15 +230,6 @@ public class Game implements Runnable{
     }
     
     /**
-     * geteEnemy 
-     * 
-     * @return al enemigo
-     */
-    public Enemy geteEnemy() {
-        return eEnemy;
-    }
-    
-    /**
      * getiNumPlayers
      * 
      * @return para conseguir el numero de jugadores
@@ -205,17 +265,26 @@ public class Game implements Runnable{
         
         dispDisplay = new Display(sTitle, iWidth, iHeight);     //se crea el display
         Assets.init();
+        r = new Random();
         //inicializa los assets 
         Controllers = new ArrayList<GamePadController>();
         animationBG = new Animation(Assets.imgBackground, 120);
         fightanimation = new Animation(Assets.imgFightBG, 120);
-        for(int i = 0; i < getiNumPlayers(); i++){ //inserta todos los controles necesairos
+        fightanimation2 = new Animation(Assets.imgFightBG2,60);
+        fightanimation3 = new Animation(Assets.imgFightBG3,60);
+        menumusic = new SoundClip("menu.wav");
+        navigate = new SoundClip("navigate.wav");
+        select = new SoundClip("select.wav");
+        selectBack = new SoundClip("selectback.wav");
+        start = new SoundClip("start.wav");
+        battle1 = new SoundClip("battle1.wav");
+        for(int i = 0; i < 1; i++){ //inserta todos los controles necesairos
             GamePadController Controller = new GamePadController(i);
             Controllers.add(Controller);
         }
         
         Players = new ArrayList<Player>();
-        for(int i = 0; i < getiNumPlayers(); i++){ //solo crea una lista con los juadores
+        for(int i = 0; i < 1; i++){ //solo crea una lista con los juadores
             
             Player player = new Player((getiWidth() /2 ) - 100, 
                     (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i));
@@ -225,6 +294,7 @@ public class Game implements Runnable{
         
         aArena = new Arena(iWidth/2-300, iHeight/2-350, 600, 600, this);      
         dispDisplay.getJframe().addKeyListener(KeyManager);
+        setStateStart();
     }
     
     /**
@@ -274,7 +344,21 @@ public class Game implements Runnable{
         
         if(state == STATE.GAME){
             fightanimation.tick();
+            fightanimation2.tick();
+            fightanimation3.tick();
             //para checar cada jugador
+            itr = Controllers.iterator();
+            while(itr.hasNext()){
+                GamePadController Controller = (GamePadController) itr.next();
+                if(Controller.isButtonPressed(Controller.getButtonStart())){
+                    setStatePause();
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
             itr = Players.iterator();
             while (itr.hasNext()) {
                 Player playeraux = (Player) itr.next();
@@ -285,7 +369,6 @@ public class Game implements Runnable{
 
                     Player player2 = (Player) itr2.next(); 
                     //interseccion entre objetos
-                    player2.setHit(false);
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
                         player2.setHit(true);
@@ -295,15 +378,33 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
+
                 }
             }
-        }else if(state == STATE.Start){
+        }
+        if(state == STATE.Pause){
+            itr = Controllers.iterator();
+            while(itr.hasNext()){
+                GamePadController Controller = (GamePadController) itr.next();
+                if(Controller.isButtonPressed(Controller.getButtonStart())){
+                    setStateGame();
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            
+        }
+        if(state == STATE.Start){
             animationBG.tick();
             itr = Controllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 //para seleccionar
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
+                    start.play();
                     setStateMenu();
                     try{
                         Thread.sleep(200);
@@ -313,27 +414,125 @@ public class Game implements Runnable{
                     
                 }
             }
-        }else if(state == STATE.ModeSelection){
+        }
+        if(state == STATE.Settings){
+            itr = Controllers.iterator();
+            animationBG.tick();
+            while(itr.hasNext()){
+            GamePadController Controller = (GamePadController) itr.next();
+            if(Controller.isButtonPressed(Controller.getButtonB())){
+                selectBack.play();
+                setStateMenu();
+           }
+         }
+            
+        }
+        if(state == STATE.ModeSelection){
             itr = Controllers.iterator();
             animationBG.tick();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
-                if(Controller.isButtonPressed(Controller.getButtonA())){
-                   setStateGame();
+                if(Controller.isButtonPressed(Controller.getButtonB())){
+                    selectBack.play();
+                    setStateMenu();
+                    
+                }
+                if(Controller.getLXYDir() == Controller.getSOUTH()){
+                    setPointery1Down(60);
+                    setPointery2Down(60);
+                    navigate.play();
+                    if(getPointery() > 530){
+                        setPointery1(400);
+                        setPointery2(400);
+                    }
                     try{
                         Thread.sleep(200);
                     }catch(InterruptedException e){
                         e.printStackTrace();
-              }
-            }
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getNORTH()){
+                    setPointery1Up(60);
+                    setPointery2Up(60);
+                    navigate.play();
+                    if(getPointery() < 390){
+                        setPointery1(520);
+                        setPointery2(520);
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(Controller.isButtonPressed(Controller.getButtonA())){
+                    select.play();
+                    if(getPointery() == 400){
+                        setStateModeSelection();
+                    }
+                    if(getPointery() == 460){
+                        random = setStateNewGame(r);
+                    }
+                    if(getPointery() == 520){
+                        setStateSettings();
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+
           }
-        }else if(state == STATE.MENU){
+        }
+        if(state == STATE.MENU){
             animationBG.tick();
             itr = Controllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
-                   setStateModeSelection();
+                    select.play();
+                    if(getPointery() == 435){
+                        setStateModeSelection();
+                    }
+                    if(getPointery() == 485){
+                        setStateLeaderBoard();
+                    }
+                    if(getPointery() == 535){
+                        setStateSettings();
+                    }
+                    if(getPointery() == 585 && state == STATE.MENU){
+                        System.exit(0);
+                    }
+                   
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getSOUTH()){
+                    setPointery1Down(50);
+                    setPointery2Down(50);
+                    navigate.play();
+                    if(getPointery() > 585){
+                        setPointery1(435);
+                        setPointery2(435);
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getNORTH()){
+                    setPointery1Up(50);
+                    setPointery2Up(50);
+                    navigate.play();
+                    if(getPointery() < 435){
+                        setPointery1(585);
+                        setPointery2(585);
+                    }
                     try{
                         Thread.sleep(200);
                     }catch(InterruptedException e){
@@ -372,8 +571,6 @@ public class Game implements Runnable{
                 gGraphics.drawImage(animationBG.getCurrentFrame(), 0, 
                 0, getiWidth(), getiHeight(),null);
                 gGraphics.drawImage(Assets.imgLogo, 0, 0, 900, 300,null);
-                //gGraphics.drawImage(Assets.imgPointerDer, 650, 300, 50, 50,null);
-                //gGraphics.drawImage(Assets.imgPointerIzq, 250, 300, 50, 50, null);
                 gGraphics.drawImage(Assets.imgStart, 325, 300, 300,300,null);
                 
             }
@@ -383,8 +580,9 @@ public class Game implements Runnable{
                 0, getiWidth(), getiHeight(),null);
                 gGraphics.drawImage(Assets.imgLogo, 0, 0, 900, 300,null);
                 gGraphics.drawImage(Assets.imgNewGame, 200, 315, 500, 300, null);
-                gGraphics.drawImage(Assets.imgHighScore, 200, 350, 500, 300, null);
-                gGraphics.drawImage(Assets.Settings, 200, 400, 500, 300, null);
+                gGraphics.drawImage(Assets.imgHighScore, 220, 350, 470, 300, null);
+                gGraphics.drawImage(Assets.Settings, 200, 400, 500, 320, null);
+                gGraphics.drawImage(Assets.imgquit,260,480,400,250,null);
                 gGraphics.drawImage(Assets.imgPointerIzq, iPointerx, iPointery, 50,50,null);
                 gGraphics.drawImage(Assets.imgPointerDer, iPointerx2,iPointery2, 50,50,null);
                 
@@ -395,15 +593,40 @@ public class Game implements Runnable{
                 gGraphics.drawImage(animationBG.getCurrentFrame(), 0, 
                 0, getiWidth(), getiHeight(),null);
                 gGraphics.drawImage(Assets.imgLogo, 0, 0, 900, 300,null);
-                gGraphics.drawImage(Assets.img1v1, 400, 325, 300, 200, null);
+                gGraphics.drawImage(Assets.imgffa,275, 275, 400,300,null);
+                gGraphics.drawImage(Assets.img1v1, 275, 335, 400, 300, null);
+                gGraphics.drawImage(Assets.img2v2, 275, 385, 400,300,null);
+                gGraphics.drawImage(Assets.imgPointerIzq, iPointerx, iPointery, 50, 50, null);
+                gGraphics.drawImage(Assets.imgPointerDer, iPointerx2, iPointery2, 50, 50, null);
+            }
+            
+            if(state == STATE.Settings){
+                
+            }
+            
+            if(state == STATE.Leaderboard){
+                
+            }
+            
+            if(state == STATE.Pause){
+                gGraphics.drawImage(Assets.imgPause, 0, 0, iWidth, iHeight, null);
+                
             }
             
             //AGREGAR RENDERS AQUI
             if( state == STATE.GAME){
                 
-                //gGraphics.drawImage(Assets.imgBackground, 0,0, iWidth, iHeight,null);
+                if(random == 0){
                 gGraphics.drawImage(fightanimation.getCurrentFrame(), 0, 
-                0, getiWidth(), getiHeight(),null);
+                         0, getiWidth(), getiHeight(),null);                    
+                }else if (random == 1){
+                gGraphics.drawImage(fightanimation2.getCurrentFrame(), 0, 0, 
+                        getiWidth(), getiHeight(), null);    
+                }else if ( random == 2){
+                gGraphics.drawImage(fightanimation3.getCurrentFrame(),0,0,
+                        getiWidth(), getiHeight(), null);
+                }
+
                 Iterator itr = Players.iterator();
                     while (itr.hasNext()) {
                     Player playeraux = (Player) itr.next();
