@@ -262,7 +262,7 @@ public class Player extends Item {
 
             }else if(Controller.isButtonPressed(Controller.getButtonA()) 
                     && (Direction == -1)){
-                //this.animationIzqAtc.tick();
+                this.animationIzqAtc.tick();
                 this.animationAtkIzq.tick();
                 setAttack(true);
 
@@ -325,41 +325,63 @@ public class Player extends Item {
         }else if(brinco == true && (getDirection() == 1) && !Attack){
             gGraphics.drawImage(Assets.AnimationJumpDer(mono), getiX(), getiY(),
                         getiWidth(), getiHeight(), null);
+            
+        }else if(brinco == true && (getDirection() == 1) && Attack){
+            gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
+                getiY(), getiWidth(), getiHeight(), null);
+            
+            gGraphics.drawImage(Assets.AnimationJumpAtcDer(mono), getiX(), getiY(),
+                        getiWidth(), getiHeight(), null);
+            
+        }else if(brinco == true && (getDirection() == -1) && Attack){
+            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
+                getiY(), getiWidth(), getiHeight(),null);
+            
+            gGraphics.drawImage(Assets.AnimationJumpAtcIzq(mono), getiX(), getiY(),
+                        getiWidth(), getiHeight(), null);
         }
+        
+        
         //animacion de ataque a la derecha 
         
         if(isAttack() && (getDirection() == 1) && isMoving() && !brinco){
             
             gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
-                getiY(), getiWidth(), getiHeight(),null);
+                getiY(), getiWidth(), getiHeight(), null);
             
             gGraphics.drawImage(animationDerAtc.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
             
             
 
+        }else if(isAttack() && (getDirection() == -1) && isMoving() && !brinco){
+            
+            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
+                getiY(), getiWidth(), getiHeight(), null);
+            
+            gGraphics.drawImage(animationIzqAtc.getCurrentFrame(), getiX(), 
+                getiY(), getiWidth(), getiHeight(),null);
+            
+            
+
         }
         
-        if(isAttack() && (getDirection() == 1) && !isMoving()){
+        if(isAttack() && (getDirection() == 1) && !isMoving() && !brinco){
 
-            gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
+            gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX() - 12, 
                 getiY(), getiWidth(), getiHeight(),null);
                 
             gGraphics.drawImage(Assets.ParadoDerAtc(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
+                        85, getiHeight(), null);
             
-            
+        }else if(isAttack() && (getDirection() == -1) && !isMoving() && !brinco){//ataque a la izquierda
 
-        }else if(isAttack() && (getDirection() == -1) && !isMoving()){//ataque a la izquierda
-
-            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
+            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX() + 6, 
                 getiY(), getiWidth(), getiHeight(),null);
             
-            gGraphics.drawImage(Assets.ParadoIzqAtc(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
+            gGraphics.drawImage(Assets.ParadoIzqAtc(mono), getiX() + 8, getiY(),
+                        85, getiHeight(), null);
             
-            
-
         }else if(isMoving() && getDirection() == 1 && !brinco && !Attack){ //moviendo a la derecha
 
             gGraphics.drawImage(animationRight.getCurrentFrame(), getiX(), getiY(), 
