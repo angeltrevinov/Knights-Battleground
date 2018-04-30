@@ -23,21 +23,12 @@ public class Player extends Item {
     private Animation animationRight;
     private Animation animationAtkDer;
     private Animation animationAtkIzq;
-    private Animation animationDerAtc;
-    private Animation animationIzqAtc;
     private boolean Moving;
     private boolean Attack;     //para saber si esta atacando
     private Game game;
     private int Direction;      //direccion del jugador
     private String mono; 
     private GamePadController Controller;
-    private int VelocidadX;
-    private int VelocidadY;
-    private boolean brinco;
-    private int ticks;
-    private boolean hit;
-    private int salud;  //su salud
-    private boolean dead; 
     
     /**
      * Player
@@ -68,82 +59,10 @@ public class Player extends Item {
         this.animationLeft = new Animation(Assets.AnimationIzq(mono), 50);
         this.animationAtkDer = new Animation(Assets.AtkDer(mono),50);
         this.animationAtkIzq = new Animation(Assets.AtkIzq(mono), 50);
-        this.animationDerAtc = new Animation(Assets.AnimationDerAtc(mono), 50);
-        this.animationIzqAtc = new Animation(Assets.AnimationIzqAtc(mono), 50);
-        
         Direction = 1;
         Moving = false;
         Attack = false; 
-        VelocidadX = 0;
-        VelocidadY = -6;
-        brinco = false;
-        ticks = 0;
-        hit = false;
-        salud = 0;
-        dead = false;
     }
-
-    public boolean isDead() {
-        return dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
-
-    public int getSalud() {
-        return salud;
-    }
-
-    public void setSalud(int salud) {
-        this.salud = salud;
-    }
-
-    public boolean isHit() {
-        return hit;
-    }
-
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
-
-    public GamePadController getController() {
-        return Controller;
-    }
-    
-    public int getVelocidadX() {
-        return VelocidadX;
-    }
-
-    public void setVelocidadX(int VelocidadX) {
-        this.VelocidadX = VelocidadX;
-    }
-
-    public int getVelocidadY() {
-        return VelocidadY;
-    }
-
-    public void setVelocidadY(int VelocidadY) {
-        this.VelocidadY = VelocidadY;
-    }
-
-    public boolean isBrinco() {
-        return brinco;
-    }
-
-    public void setBrinco(boolean brinco) {
-        this.brinco = brinco;
-    }
-
-    public int getTicks() {
-        return ticks;
-    }
-
-    public void setTicks(int ticks) {
-        this.ticks = ticks;
-    }
-    
-    
     
     /**
      * isAttack
@@ -227,83 +146,62 @@ public class Player extends Item {
         this.animationLeft.tick();
         this.animationRight.tick();
         
-        setTicks(getTicks() + 1);
-        //gravedad
-        
-        setiY(getiY() - getVelocidadY());
-        setiX(getiX() - getVelocidadX());
-        
-        
-        if(getiY() + getiHeight() + 60 >= getGaGame().getiHeight()){
-            setBrinco(false);
-        }else if(isBrinco() && getVelocidadY() >= -6 && (getTicks() % 5) == 1){
-            setVelocidadY(getVelocidadY() - 4);
-        }
- 
-        
-        if(getiTypePlayer() == getController().getiNumController()){
-                       
+        //si el numero del jugador corresponde al numero del control
+        if(getiTypePlayer() == Controller.getiNumController()){
+
             //mover al jugador en y
-            if(getController().getLXYDir() == getController().getNORTH()){ //hacia arriba
-                if(!isBrinco()){
-                    setBrinco(true);
-                    setVelocidadY(getVelocidadY()+25);
-                    setMoving(false);
-                }
- 
-            }else{
+            if(Controller.getLXYDir() == Controller.getNORTH()){ //hacia arriba
+
+                setiY(getiY() - 10);
                 setMoving(true);
-            }
-            if(getController().getLXYDir() == getController().getSOUTH()){//hacia abajo
+
+            }else if(Controller.getLXYDir() == Controller.getSOUTH()){//hacia abajo
 
                 setiY(getiY() + 10); 
                 setMoving(true);
 
-            }else if(getController().getLXYDir() == getController().getEAST()){//a la derecha
-                
+            }
+
+            //mover al jugador en x
+            if(Controller.getLXYDir() == Controller.getEAST()){//a la derecha
+
                 setiX(getiX() + 5);
                 setDirection(1);
                 setMoving(true);
 
-            }else if(getController().getLXYDir() == getController().getWEST()){ //a la izquierda
-                
+            }else if(Controller.getLXYDir() == Controller.getWEST()){ //a la izquierda
+
                 setiX(getiX() - 5);
                 setDirection(-1);
                 setMoving(true);
-            }else
+            }
 
             //mover al jugador en diagonal
-            if(getController().getLXYDir() == getController().getNW()){ //arriba a la izquierda
+            if(Controller.getLXYDir() == Controller.getNW()){ //arriba a la izquierda
+
+                setiY(getiY() - 10);
                 setiX(getiX() - 5);
-                if(!isBrinco()){
-                    setBrinco(true);
-                    setVelocidadY(getVelocidadY() + 25);
-                    setMoving(false);
-                }
                 setDirection(-1);
                 setMoving(true); 
 
-            }else if(getController().getLXYDir() == getController().getNE()){//arriba a la derecha
-                setiX(getiX() + 5); 
-                if(!isBrinco()){
-                    setBrinco(true);
-                    setVelocidadY(getVelocidadY() +25);
-                    setMoving(false);
-                }
+            }else if(Controller.getLXYDir() == Controller.getNE()){//arriba a la derecha
+
+                setiY(getiY() - 10);
+                setiX(getiX() + 5);
                 setDirection(1);
                 setMoving(true);  
 
-            }else if(getController().getLXYDir()== getController().getSW()){ //abajo a la izquierda
+            }else if(Controller.getLXYDir()== Controller.getSW()){ //abajo a la izquierda
 
-                //setiY(getiY() + 10);
-                //setiX(getiX() - 5);
+                setiY(getiY() + 10);
+                setiX(getiX() - 5);
                 setDirection(-1);
                 setMoving(true); 
 
-            }else if(getController().getLXYDir() == getController().getSE()){ //abajo a la derecha
+            }else if(Controller.getLXYDir() == Controller.getSE()){ //abajo a la derecha
 
-                //setiY(getiY() + 10);
-                //setiX(getiX() + 5);
+                setiY(getiY() + 10);
+                setiX(getiX() + 5);
                 setDirection(1);
                 setMoving(true); 
 
@@ -312,36 +210,38 @@ public class Player extends Item {
             //para el ataque a la derecha
             if(Controller.isButtonPressed(Controller.getButtonA()) 
                     && (Direction == 1)){
-                this.animationDerAtc.tick();
+
                 this.animationAtkDer.tick();
                 setAttack(true);
 
             }else if(Controller.isButtonPressed(Controller.getButtonA()) 
                     && (Direction == -1)){
-                this.animationIzqAtc.tick();
+
                 this.animationAtkIzq.tick();
                 setAttack(true);
 
             }           
 
             //colision con los bordes de la pantalla en x
-            if(getiX() >= getGaGame().getiWidth() || getiX() <= -98){
+            if(getiX() + getiWidth() >= getGaGame().getiWidth()){
 
-                setDead(true);
+                setiX(getGaGame().getiWidth() - getiWidth());
+
+            }else if(getiX() <= 0){
+
+                setiX(0);
 
             }
-            
             //colision con los borden en y 
-            if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
+            if(getiY() + getiHeight()+120 >= getGaGame().getiHeight()){ 
 
-                setiY(getGaGame().getiHeight() - getiHeight()- 60);
-                
-            }else if(getiY() <= -130){
+                setiY(getGaGame().getiHeight() - getiHeight()-120);
 
-                setDead(true);
+            }else if(getiY() <= 0){
+
+                setiY(0);
 
             }
-             
 
             //por si no se esta moviendo
             if(Controller.getLXYDir() == Controller.getNONE()){
@@ -353,22 +253,6 @@ public class Player extends Item {
             //para desactivar el ataque
             if(!Controller.isButtonPressed(Controller.getButtonA())){
                 setAttack(false);
-            }
-            
-            //para que se muera
-            if(isHit()){
-                setVelocidadX( getDirection() * getSalud()*2 );
-                setiY(getiY()  - getSalud()*4);
-            }else if(!isHit() && (getTicks() % 7) == 1){
-                setVelocidadX(0);
-            }
-            
-            //para resetear al personaje para cuando muera
-            if(isDead()){
-                setiX(getGaGame().getiWidth()/2 - 100 * getiTypePlayer());
-                setiY(10);
-                setSalud(0);
-                setDead(false);
             }
 
         }
@@ -383,92 +267,37 @@ public class Player extends Item {
      */
     @Override
     public void render(Graphics gGraphics) {
-        
-        
-        if(brinco == true && (getDirection() == -1) && !Attack){
             
-            gGraphics.drawImage(Assets.AnimationJumpIzq(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
-            
-        }else if(brinco == true && (getDirection() == 1) && !Attack){
-            gGraphics.drawImage(Assets.AnimationJumpDer(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
-            
-        }else if(brinco == true && (getDirection() == 1) && Attack){
-            gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
-                getiY(), getiWidth(), getiHeight(), null);
-            
-            gGraphics.drawImage(Assets.AnimationJumpAtcDer(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
-            
-        }else if(brinco == true && (getDirection() == -1) && Attack){
-            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
-                getiY(), getiWidth(), getiHeight(),null);
-            
-            gGraphics.drawImage(Assets.AnimationJumpAtcIzq(mono), getiX(), getiY(),
-                        getiWidth(), getiHeight(), null);
-        }
-        
-        
         //animacion de ataque a la derecha 
-        
-        if(isAttack() && (getDirection() == 1) && isMoving() && !brinco){
-            
+        if(isAttack() && (getDirection() == 1)){
+
             gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
-                getiY(), getiWidth(), getiHeight(), null);
-            
-            gGraphics.drawImage(animationDerAtc.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
-            
-            
 
-        }else if(isAttack() && (getDirection() == -1) && isMoving() && !brinco){
-            
+        }else if(isAttack() && (getDirection() == -1)){//ataque a la izquierda
+
             gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX(), 
-                getiY(), getiWidth(), getiHeight(), null);
-            
-            gGraphics.drawImage(animationIzqAtc.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
-            
-            
 
-        }
-        
-        if(isAttack() && (getDirection() == 1) && !isMoving() && !brinco){
-
-            gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX() - 12, 
-                getiY(), getiWidth(), getiHeight(),null);
-                
-            gGraphics.drawImage(Assets.ParadoDerAtc(mono), getiX(), getiY(),
-                        85, getiHeight(), null);
-            
-        }else if(isAttack() && (getDirection() == -1) && !isMoving() && !brinco){//ataque a la izquierda
-
-            gGraphics.drawImage(animationAtkIzq.getCurrentFrame(), getiX() + 6, 
-                getiY(), getiWidth(), getiHeight(),null);
-            
-            gGraphics.drawImage(Assets.ParadoIzqAtc(mono), getiX() + 8, getiY(),
-                        85, getiHeight(), null);
-            
-        }else if(isMoving() && getDirection() == 1 && !brinco && !Attack){ //moviendo a la derecha
+        }else if(isMoving() && getDirection() == 1){ //moviendo a la derecha
 
             gGraphics.drawImage(animationRight.getCurrentFrame(), getiX(), getiY(), 
                 getiWidth(), getiHeight(), null);
 
-        }else if(isMoving() && getDirection() == -1 && !brinco && !Attack){//moviendo a la izquierda
+        }else if(isMoving() && getDirection() == -1){//moviendo a la izquierda
 
             gGraphics.drawImage(animationLeft.getCurrentFrame(), getiX(), getiY(), 
                 getiWidth(), getiHeight(), null);
 
-        }else if(!isMoving() && getDirection() == 1 && !brinco){  //parado a la derecha
+        }else if(!isMoving() && getDirection() == 1){  //parado a la derecha
 
             gGraphics.drawImage(Assets.ParadoDer(mono), getiX(), getiY(),
                         getiWidth(), getiHeight(), null);
 
-        }else if(!isMoving() && getDirection() == -1 && !brinco){ //parado a la izquierda
+        }else if(!isMoving() && getDirection() == -1){ //parado a la izquierda
             gGraphics.drawImage(Assets.ParadoIzq(mono), getiX(), getiY(), 
                         getiWidth(), getiHeight(), null);
         }
         
-    }//para render
+    }//para el render
 }//para toda la clase

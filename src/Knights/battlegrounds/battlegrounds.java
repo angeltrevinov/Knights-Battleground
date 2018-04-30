@@ -7,7 +7,6 @@ package Knights.battlegrounds;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JOptionPane;
 
 /**
  * @author Angel Odiel Treviño Villanueva A01336559
@@ -27,17 +26,10 @@ public class battlegrounds {
         //obtiene el tamaño de la pantalla del sistema 
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int NumPlayers = 0;
-        String whatTheUserEntered = JOptionPane.showInputDialog("Number of players?");
-        if (whatTheUserEntered == null) {
-            System.out.println("The user canceled");
-        }else{
-            NumPlayers = Integer.parseInt(whatTheUserEntered);
-        }
         
         //metodos que empiezan el juego
         Game gamGeometry = new Game("Geometry Battlegrounds",  900, 
-                650, NumPlayers); 
+                650, 2); 
         gamGeometry.start();
         
     }
