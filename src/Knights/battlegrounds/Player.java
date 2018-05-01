@@ -23,7 +23,7 @@ public class Player extends Item {
     private Animation animationRight;
     private Animation animationAtkDer;
     private Animation animationAtkIzq;
-    private Animation animationDerAtL;
+    private Animation animationDerAtc;
     private Animation animationIzqAtc;
     private boolean Moving;
     private boolean Attack;     //para saber si esta atacando
@@ -59,12 +59,10 @@ public class Player extends Item {
         //dependiendo del tipo de jugador, este sera el sprite
         this.iTypePlayer = iTypePlayer;
         this.Controller = Controller;
-
+        this.team = team;
         if(iTypePlayer == 0){
             mono = "DoradoEspada";
         }else if(iTypePlayer == 1){
-        this.team = team;
-        if(iTypePlayer == 1){
             mono = "DoradoEspada2";
         }else if(iTypePlayer == 2){
             mono = "CafeAcha";
@@ -76,7 +74,7 @@ public class Player extends Item {
         this.animationLeft = new Animation(Assets.AnimationIzq(mono), 50);
         this.animationAtkDer = new Animation(Assets.AtkDer(mono),50);
         this.animationAtkIzq = new Animation(Assets.AtkIzq(mono), 50);
-        this.animationDerAtL = new Animation(Assets.AnimationDerAtc(mono), 50);
+        this.animationDerAtc = new Animation(Assets.AnimationDerAtc(mono), 50);
         this.animationIzqAtc = new Animation(Assets.AnimationIzqAtc(mono), 50);
         
         Direction = 1;
@@ -330,7 +328,7 @@ public class Player extends Item {
             //para el ataque a la derecha
             if(Controller.isButtonPressed(Controller.getButtonA()) 
                     && (Direction == 1)){
-                this.animationIzqAtc.tick();
+                this.animationDerAtc.tick();
                 this.animationAtkDer.tick();
         
                 setAttack(true);
@@ -437,7 +435,7 @@ public class Player extends Item {
             gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(), null);
             
-            gGraphics.drawImage(animationIzqAtc.getCurrentFrame(), getiX(), 
+            gGraphics.drawImage(animationDerAtc.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
             
             
