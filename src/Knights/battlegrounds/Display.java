@@ -72,7 +72,7 @@ class Display {
 
         //Setting not resizable, visible and possible to close
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setResizable(true);
+        jframe.setResizable(false);
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
 

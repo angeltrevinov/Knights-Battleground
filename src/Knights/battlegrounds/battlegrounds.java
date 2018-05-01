@@ -28,13 +28,14 @@ public class battlegrounds {
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int NumPlayers = 0;
-        String whatTheUserEntered = JOptionPane.showInputDialog("Number of players?");
-        if (whatTheUserEntered == null) {
-            System.out.println("The user canceled");
-        }else{
-            NumPlayers = Integer.parseInt(whatTheUserEntered);
-        }
-        
+        do{
+            String whatTheUserEntered = JOptionPane.showInputDialog("Number of players?");
+            if (whatTheUserEntered == null) {
+                System.out.println("The user canceled");
+            }else{
+                NumPlayers = Integer.parseInt(whatTheUserEntered);
+            }
+        }while(NumPlayers <= 1 && NumPlayers > 4);
         //metodos que empiezan el juego
         Game gamGeometry = new Game("Geometry Battlegrounds",  900, 
                 650, NumPlayers); 

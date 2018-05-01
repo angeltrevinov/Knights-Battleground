@@ -5,6 +5,7 @@
  */
 package Knights.battlegrounds;
 
+import Knights.battlegrounds.Game.STATE;
 import static java.awt.Color.red;
 import java.awt.Graphics;
 import java.awt.Shape;
@@ -52,8 +53,8 @@ public class Arena extends Item{
      */
     @Override
     public void render(Graphics gGraphics) {
-        gGraphics.setColor(red);
-        gGraphics.drawOval(getiX(), getiY(), getiWidth(), getiHeight());
+        gGraphics.drawImage(Assets.plataform, getiX(), getiY(), getiWidth(), 
+                getiHeight(), null);
     }
     
 }
