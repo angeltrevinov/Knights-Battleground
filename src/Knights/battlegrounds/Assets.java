@@ -28,6 +28,8 @@ public class Assets {
     public static BufferedImage Settings;
     public static BufferedImage img1v1, img2v2;
     public static BufferedImage imgffa;
+    public static BufferedImage imgwinnerPointerDer, imgwinnerPointerIzq;
+    public static BufferedImage imgVictoria;
     public static BufferedImage imgFightBG[];
     public static BufferedImage imgFightBG2[];
     public static BufferedImage imgFightBG3[];
@@ -63,13 +65,6 @@ public class Assets {
      */
     public static void init(){
         
-        menumusic = new SoundClip("/Sounds/menu.wav");
-        navigate = new SoundClip("/Sounds/navigate.wav");
-        select = new SoundClip("/Sounds/select.wav");
-        selectBack = new SoundClip("/Sounds/selectback.wav");
-        start = new SoundClip("/Sounds/start.wav");
-        battle1 = new SoundClip("/Sounds/battle1.wav");
-        
         //Imagenes son cargadas en su respectiva variable
         imgLogo = ImageLoader.loadImage("/Images/logo.png");
         imgPointerDer = ImageLoader.loadImage("/Images/pointerder.png");
@@ -83,6 +78,9 @@ public class Assets {
         imgffa = ImageLoader.loadImage("/Images/ffa.png");
         imgquit = ImageLoader.loadImage("/images/quitgame.png");
         imgPause = ImageLoader.loadImage("/Images/pausa.png");
+        imgVictoria = ImageLoader.loadImage("/images/winnerscreen.png");
+        imgwinnerPointerDer = ImageLoader.loadImage("/images/winnerpointer.png");
+        imgwinnerPointerIzq = ImageLoader.loadImage("/images/winnerpointer.png");
         
         //Sonidos son cargados en su respectiva variable
         select = new SoundClip("/sounds/select.wav");
