@@ -63,6 +63,13 @@ public class Assets {
      */
     public static void init(){
         
+        menumusic = new SoundClip("/Sounds/menu.wav");
+        navigate = new SoundClip("/Sounds/navigate.wav");
+        select = new SoundClip("/Sounds/select.wav");
+        selectBack = new SoundClip("/Sounds/selectback.wav");
+        start = new SoundClip("/Sounds/start.wav");
+        battle1 = new SoundClip("/Sounds/battle1.wav");
+        
         //Imagenes son cargadas en su respectiva variable
         imgLogo = ImageLoader.loadImage("/Images/logo.png");
         imgPointerDer = ImageLoader.loadImage("/Images/pointerder.png");

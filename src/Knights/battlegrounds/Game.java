@@ -79,6 +79,7 @@ public class Game implements Runnable{
         bRunning = false; 
         KeyManager = new KeyManager();
     }
+  
  /**
   * Se enumeran los diferentes estados en los que puede estar el juego
   * Menu: menu del juego, donde aparecen las opciones new game, settings, quit game
@@ -115,6 +116,14 @@ public class Game implements Runnable{
     public void setStatePause(){
         LastState = state;
         state = STATE.Pause;
+        
+    }
+
+    public void setStateStart(){
+        state = STATE.Start;
+        Assets.menumusic.setLooping(true);
+        Assets.menumusic.play();
+
         
     }
     
@@ -608,7 +617,7 @@ public class Game implements Runnable{
                 GamePadController Controller = (GamePadController) itr.next();
                 //para seleccionar
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
-                    start.play();
+                    Assets.start.play();
                     setStateMenu();
                     try{
                         Thread.sleep(200);
@@ -625,7 +634,7 @@ public class Game implements Runnable{
             while(itr.hasNext()){
             GamePadController Controller = (GamePadController) itr.next();
             if(Controller.isButtonPressed(Controller.getButtonB())){
-                selectBack.play();
+                Assets.selectBack.play();
                 setStateMenu();
            }
          }
@@ -637,14 +646,14 @@ public class Game implements Runnable{
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonB())){
-                    selectBack.play();
+                    Assets.selectBack.play();
                     setStateMenu();
                     
                 }
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(60);
                     setPointery2Down(60);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() > 530){
                         setPointery1(400);
                         setPointery2(400);
@@ -658,7 +667,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getNORTH()){
                     setPointery1Up(60);
                     setPointery2Up(60);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() < 390){
                         setPointery1(520);
                         setPointery2(520);
@@ -670,7 +679,7 @@ public class Game implements Runnable{
                     }
                 }
                 if(Controller.isButtonPressed(Controller.getButtonA())){
-                    select.play();
+                    Assets.select.play();
                     if(getPointery() == 400){
                         random = setStateNewGameFFA(r);
                     }
@@ -695,7 +704,7 @@ public class Game implements Runnable{
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
-                    select.play();
+                    Assets.select.play();
                     if(getPointery() == 435){
                         setStateModeSelection();
                     }
@@ -718,7 +727,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(50);
                     setPointery2Down(50);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() > 585){
                         setPointery1(435);
                         setPointery2(435);
@@ -732,7 +741,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getNORTH()){
                     setPointery1Up(50);
                     setPointery2Up(50);
-                    navigate.play();
+                    Assets.navigate.play();
                     if(getPointery() < 435){
                         setPointery1(585);
                         setPointery2(585);
