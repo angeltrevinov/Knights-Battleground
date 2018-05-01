@@ -71,7 +71,6 @@ public class Assets {
         battle1 = new SoundClip("/Sounds/battle1.wav");
         
         //Imagenes son cargadas en su respectiva variable
-        imgBackground = new BufferedImage[8];
         imgLogo = ImageLoader.loadImage("/Images/logo.png");
         imgPointerDer = ImageLoader.loadImage("/Images/pointerder.png");
         imgPointerIzq = ImageLoader.loadImage("/Images/pointerizq.png");
@@ -84,35 +83,51 @@ public class Assets {
         imgffa = ImageLoader.loadImage("/Images/ffa.png");
         imgquit = ImageLoader.loadImage("/images/quitgame.png");
         imgPause = ImageLoader.loadImage("/Images/pausa.png");
-        imgFightBG = new BufferedImage[8];
-        imgFightBG2 = new BufferedImage[4];
-        imgFightBG3 = new BufferedImage[32];
-       
-        DoradoEspadaDerParado = ImageLoader.loadImage("/DoradoEspada/_IDLE_000.png");
-        DoradoEspadaIzqParado = ImageLoader.loadImage("/DoradoEspada/_IDLEIZQ_000.png");
-        DoradoEspadaBrincoIzq = ImageLoader.loadImage("/DoradoEspada/_JUMPIZQ_001.png");
-        DoradoEspadaBrincoDer = ImageLoader.loadImage("/DoradoEspada/_JUMP_001.png");
-        DoradoEspadaDerParadoAtc = ImageLoader.loadImage("/DoradoEspada/IDLEDER.png");
-        DoradoEspadaIzqParadoAtc = ImageLoader.loadImage("/DoradoEspada/IDLEIZQ.png");
-        DoradoEspadaDerBrincoAtc = ImageLoader.loadImage("/DoradoEspada/_JUMPDERATC_001.png");
-        DoradoEspadaIzqBrincoAtc = ImageLoader.loadImage("/DoradoEspada/_JUMPIZQATC_001.png");
         
+        //Sonidos son cargados en su respectiva variable
+        select = new SoundClip("/sounds/select.wav");
+        selectBack = new SoundClip("/sounds/selectback.wav");
+        start = new SoundClip("/sounds/start.wav");
+        menumusic = new SoundClip("/sounds/menu.wav");
+        navigate = new SoundClip("/sounds/navigate.wav");
+        battle1 = new SoundClip("/sounds/battle1.wav");
         
+        //Imagenes de personaje dorado en idle
+        DoradoEspadaDerParado = ImageLoader.loadImage("/DoradoEspada/"
+                + "_IDLE_000.png");
+        DoradoEspadaIzqParado = ImageLoader.loadImage("/DoradoEspada/"
+                + "_IDLEIZQ_000.png");
+        DoradoEspadaDerParadoAtc = ImageLoader.loadImage("/DoradoEspada/"
+                + "IDLEDER.png");
+        DoradoEspadaIzqParadoAtc = ImageLoader.loadImage("/DoradoEspada/"
+                + "IDLEIZQ.png");
+        //Imagenes de personaje dorado en brinco
+        DoradoEspadaBrincoIzq = ImageLoader.loadImage("/DoradoEspada/"
+                + "_JUMPIZQ_001.png");
+        DoradoEspadaBrincoDer = ImageLoader.loadImage("/DoradoEspada/"
+                + "_JUMP_001.png");
+        DoradoEspadaDerBrincoAtc = ImageLoader.loadImage("/DoradoEspada/"
+                + "_JUMPDERATC_001.png");
+        DoradoEspadaIzqBrincoAtc = ImageLoader.loadImage("/DoradoEspada/"
+                + "_JUMPIZQATC_001.png");
+        
+        //Imagenes de personaje cafe acha
         CafeAchaDerParado = ImageLoader.loadImage("/CafeAcha/_IDLE_000.png");
         CafeAchaIzqParado = ImageLoader.loadImage("/CafeAcha/_IDLEIZQ_000.png");
         CafeAchaBrincoIzq = ImageLoader.loadImage("/CafeAcha/_JUMPIZQ_001.png");
         CafeAchaBrincoDer = ImageLoader.loadImage("/CafeAcha/_JUMP_001.png");
-        
+       
         GrisLanzaDerParado = ImageLoader.loadImage("/GrisLanza/_IDLE_000.png");
         GrisLanzaIzqParado = ImageLoader.loadImage("/GrisLanza/_IDLEIZQ_000.png");
         
+        //incializar los arreglos para animaciones
         DoradoEspadaDer = new BufferedImage[7];
         DoradoEspadaDerAtc = new BufferedImage[7];
         DoradoEspadaIzq = new BufferedImage[7];
         DoradoEspadaIzqAtc = new BufferedImage[7];
         DoradoEspadaAtkDer = new BufferedImage[8];
         DoradoEspadaAtkIzq = new BufferedImage[8];
-        
+       
         CafeAchaDer = new BufferedImage[7];
         CafeAchaDerAtc = new BufferedImage[7];
         CafeAchaIzq = new BufferedImage[7];
@@ -121,7 +136,13 @@ public class Assets {
    
         GrisLanzaDer = new BufferedImage[7];
         GrisLanzaIzq = new BufferedImage[7];
-
+        
+        imgFightBG = new BufferedImage[8];
+        imgFightBG2 = new BufferedImage[4];
+        imgFightBG3 = new BufferedImage[32];
+        imgBackground = new BufferedImage[8];
+        
+        //cargar los frames a sus respectivos arreglos
         for(int i =0; i <= 7; i++){
             DoradoEspadaAtkDer[i] = ImageLoader.loadImage("/DoradoEspada/Atacar_000"
                     + i + ".png");
@@ -130,6 +151,7 @@ public class Assets {
                     + i + ".png");          
         }
         
+        //cargar los frames a sus respectivos arreglos
         for(int i = 0; i <= 6; i++){
             if( i < 4){
                 imgFightBG2[i] = ImageLoader.loadImage("/Images/batalla2_" + i + ".png");
@@ -137,7 +159,7 @@ public class Assets {
             imgFightBG3[i] = ImageLoader.loadImage("/images/frame_" + i +".png");
             imgBackground[i] = ImageLoader.loadImage("/Images/" + i + ".png");
             imgFightBG[i] = ImageLoader.loadImage("/images/arena" + (i + 1) + ".png");
-DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00" 
+            DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00" 
                     + i + ".png");
             
             DoradoEspadaIzq[i] = ImageLoader.loadImage("/DoradoEspada/_RunIzq_00"
@@ -164,6 +186,8 @@ DoradoEspadaDer[i] = ImageLoader.loadImage("/DoradoEspada/_Run_00"
                     + ".png");
 
         }
+        
+        //cargar los frames a sus respectivos arreglos
         for(int i = 7; i <= 31; i++){
           imgFightBG3[i] = ImageLoader.loadImage("/images/frame_" + i +".png");  
         }

@@ -5,6 +5,7 @@
  */
 package Knights.battlegrounds;
 
+import Knights.battlegrounds.Game.STATE;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -144,6 +145,7 @@ public abstract class Item{
      * tick 
      * 
      * para modificar los objetos en cada tick
+     * @param state
      */
     public abstract void tick();
     
