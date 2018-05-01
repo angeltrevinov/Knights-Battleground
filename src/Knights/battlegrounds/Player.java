@@ -63,7 +63,11 @@ public class Player extends Item {
         if(iTypePlayer == 0){
             mono = "DoradoEspada";
         }else if(iTypePlayer == 1){
+            mono = "DoradoEspada2";
+        }else if(iTypePlayer == 2){
             mono = "CafeAcha";
+        }else if(iTypePlayer == 3){
+            mono = "CafeAcha2";
         }
         
         this.animationRight = new Animation(Assets.AnimationDer(mono), 50);
@@ -83,6 +87,14 @@ public class Player extends Item {
         hit = false;
         salud = 0;
         dead = false;
+    }
+
+    public int getTeam() {
+        return team;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
     }
 
     public boolean isDead() {
@@ -229,6 +241,8 @@ public class Player extends Item {
         this.animationLeft.tick();
         this.animationRight.tick();
         
+        
+        
         setTicks(getTicks() + 1);
         //gravedad
         
@@ -316,6 +330,7 @@ public class Player extends Item {
                     && (Direction == 1)){
                 this.animationDerAtc.tick();
                 this.animationAtkDer.tick();
+        
                 setAttack(true);
 
             }else if(Controller.isButtonPressed(Controller.getButtonA()) 
@@ -334,9 +349,9 @@ public class Player extends Item {
             }
             
             //colision con los borden en y 
-            if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
+            if(getiY() + getiHeight()+ 23 >= getGaGame().getiHeight()){ 
 
-                setiY(getGaGame().getiHeight() - getiHeight()- 60);
+                setiY(getGaGame().getiHeight() - getiHeight()- 23);
                 
             }else if(getiY() <= -130){
 
@@ -360,7 +375,8 @@ public class Player extends Item {
             //para que se muera
             if(isHit()){
                 setVelocidadX( getDirection() * getSalud()*2 );
-                setiY(getiY()  - getSalud()*4);
+                setiY(getiY()  - getSalud()*2);
+                setHit(false);
             }else if(!isHit() && (getTicks() % 7) == 1){
                 setVelocidadX(0);
             }
@@ -386,7 +402,7 @@ public class Player extends Item {
     @Override
     public void render(Graphics gGraphics) {
         
-        
+        //animacion de brinco, y ataque con brinco
         if(brinco == true && (getDirection() == -1) && !Attack){
             
             gGraphics.drawImage(Assets.AnimationJumpIzq(mono), getiX(), getiY(),
