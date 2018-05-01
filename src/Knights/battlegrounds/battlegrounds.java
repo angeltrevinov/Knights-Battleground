@@ -34,7 +34,6 @@ public class battlegrounds {
         }else{
             NumPlayers = Integer.parseInt(whatTheUserEntered);
         }
-      
         //metodos que empiezan el juego
         Game gamGeometry = new Game("Geometry Battlegrounds",  900, 
                 650, NumPlayers); 

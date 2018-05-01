@@ -319,7 +319,6 @@ public class GamePadController {
         }
         if(GamePad == null){ //si no hay, nos salimos
             System.out.println("no GamePad found");
-            System.exit(0);
         }
         return GamePad;
     }//findGamePAd
