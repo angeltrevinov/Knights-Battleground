@@ -150,7 +150,7 @@ public class Game implements Runnable{
      * @return 
      */    
     public int setStateNewGame1v1(Random r){
-        for(int i = 0; i < 1; i++){ //solo crea una lista con los juadores
+        for(int i = 0; i < 2; i++){ //solo crea una lista con los juadores
         Player player = new Player((getiWidth() /2 ) - 100, 
         (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0);
             Players.add(player);  
@@ -171,14 +171,9 @@ public class Game implements Runnable{
      * @return 
      */
     public int setStateNewGame2v2(Random r){
-        for(int i = 0; i < 1; i++){ //solo crea una lista con los juadores    
+        for(int i = 0; i < iNumPlayers; i++){ //solo crea una lista con los juadores    
         Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 1);
-            Players.add(player);   
-        }
-        for(int i = 0; i < 1; i++){ //solo crea una lista con los juadores    
-        Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 2);
+        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), (2+i)/2);
             Players.add(player);   
         }
         state = STATE.newGame2v2;
@@ -217,15 +212,6 @@ public class Game implements Runnable{
      */    
     public void setStateGame(){
         state = STATE.GAME;
-    }
-    
-    /**
-     * Pone el juego en estado de inicio
-     */
-    public void setStateStart(){
-        state = STATE.Start;
-        menumusic.play();
-        menumusic.setLooping(true);
     }
     
     /**
@@ -555,7 +541,42 @@ public class Game implements Runnable{
             fightanimation.tick();
             fightanimation2.tick();
             fightanimation3.tick();
+            itr = Controllers.iterator();
+            while(itr.hasNext()){
+                GamePadController Controller = (GamePadController) itr.next();
+                if(Controller.isButtonPressed(Controller.getButtonStart())){
+                    setStatePause();
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            itr = Players.iterator();
+            while (itr.hasNext()) {
+                Player playeraux = (Player) itr.next();
+                playeraux.tick();
+                //para checar si se estan atacando
+                Iterator itr2 = Players.iterator();
+                while(itr2.hasNext()){
+
+                    Player player2 = (Player) itr2.next(); 
+                    //interseccion entre objetos
+                    if(playeraux != player2 && playeraux.intersects(player2) 
+                            && playeraux.isAttack()){
+                        player2.setHit(true);
+                        player2.setSalud(player2.getSalud() + 1);
+                    }
+                    //se muere
+                    if(player2.getSalud() > 93){
+                        player2.setHit(true);
+                    }
+
+                }
+            }
         }
+        
         if(state == STATE.Game2v2){
             fightanimation.tick();
             fightanimation2.tick();
@@ -583,7 +604,8 @@ public class Game implements Runnable{
                     Player player2 = (Player) itr2.next(); 
                     //interseccion entre objetos
                     if(playeraux != player2 && playeraux.intersects(player2) 
-                            && playeraux.isAttack()){
+                            && playeraux.isAttack() && playeraux.getTeam() 
+                            != player2.getTeam()){
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }

@@ -23,7 +23,7 @@ public class Player extends Item {
     private Animation animationRight;
     private Animation animationAtkDer;
     private Animation animationAtkIzq;
-    private Animation animationDerAtc;
+    private Animation animationDerAtL;
     private Animation animationIzqAtc;
     private boolean Moving;
     private boolean Attack;     //para saber si esta atacando
@@ -63,14 +63,19 @@ public class Player extends Item {
         if(iTypePlayer == 0){
             mono = "DoradoEspada";
         }else if(iTypePlayer == 1){
+            //mono = "CafeAcha";
             mono = "CafeAcha";
+        }else if(iTypePlayer == 2){
+            mono = "DoradoEspada2";
+        }else if(iTypePlayer == 3){
+            mono = "CafeAcha2";
         }
         
         this.animationRight = new Animation(Assets.AnimationDer(mono), 50);
         this.animationLeft = new Animation(Assets.AnimationIzq(mono), 50);
         this.animationAtkDer = new Animation(Assets.AtkDer(mono),50);
         this.animationAtkIzq = new Animation(Assets.AtkIzq(mono), 50);
-        this.animationDerAtc = new Animation(Assets.AnimationDerAtc(mono), 50);
+        this.animationDerAtL = new Animation(Assets.AnimationDerAtc(mono), 50);
         this.animationIzqAtc = new Animation(Assets.AnimationIzqAtc(mono), 50);
         
         Direction = 1;
@@ -83,6 +88,14 @@ public class Player extends Item {
         hit = false;
         salud = 0;
         dead = false;
+    }
+
+    public int getTeam() {
+        return team;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
     }
 
     public boolean isDead() {
@@ -314,7 +327,7 @@ public class Player extends Item {
             //para el ataque a la derecha
             if(Controller.isButtonPressed(Controller.getButtonA()) 
                     && (Direction == 1)){
-                this.animationDerAtc.tick();
+                this.animationIzqAtc.tick();
                 this.animationAtkDer.tick();
                 setAttack(true);
 
@@ -360,7 +373,8 @@ public class Player extends Item {
             //para que se muera
             if(isHit()){
                 setVelocidadX( getDirection() * getSalud()*2 );
-                setiY(getiY()  - getSalud()*4);
+                setiY(getiY()  - getSalud()*2);
+                setHit(false);
             }else if(!isHit() && (getTicks() % 7) == 1){
                 setVelocidadX(0);
             }
@@ -419,7 +433,7 @@ public class Player extends Item {
             gGraphics.drawImage(animationAtkDer.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(), null);
             
-            gGraphics.drawImage(animationDerAtc.getCurrentFrame(), getiX(), 
+            gGraphics.drawImage(animationIzqAtc.getCurrentFrame(), getiX(), 
                 getiY(), getiWidth(), getiHeight(),null);
             
             
