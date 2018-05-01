@@ -996,15 +996,13 @@ public class Game implements Runnable{
             //Renders del background dentro del juego y de los players
             if( state == STATE.Game1v1 || state == STATE.Game2v2 || 
                     state == STATE.GameFFA){
-                
+                renderBG();
                 //dibujar las plataformas
                 Iterator itr2 = ArenaFloor.iterator(); 
                 while(itr2.hasNext()) {
                     Arena faux = (Arena) itr2.next(); 
                     faux.render(gGraphics); 
                 }
-                
-                renderBG();
                 renderPlayer();
 
             }

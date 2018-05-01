@@ -60,16 +60,16 @@ public class Player extends Item {
         this.iTypePlayer = iTypePlayer;
         this.Controller = Controller;
         this.team = team;
-        if(iTypePlayer == 0){
+        if(iTypePlayer == 0 || iTypePlayer == 1 || iTypePlayer == 2 || iTypePlayer == 3){
             mono = "DoradoEspada";
-        }else if(iTypePlayer == 1){
+        }/*else if(iTypePlayer == 1){
             //mono = "CafeAcha";
             mono = "CafeAcha";
         }else if(iTypePlayer == 2){
             mono = "DoradoEspada2";
         }else if(iTypePlayer == 3){
             mono = "CafeAcha2";
-        }
+        }*/
         
         this.animationRight = new Animation(Assets.AnimationDer(mono), 50);
         this.animationLeft = new Animation(Assets.AnimationIzq(mono), 50);
@@ -347,9 +347,9 @@ public class Player extends Item {
             }
             
             //colision con los borden en y 
-            if(getiY() + getiHeight()+ 60 >= getGaGame().getiHeight()){ 
+            if(getiY() + getiHeight()+ 23 >= getGaGame().getiHeight()){ 
 
-                setiY(getGaGame().getiHeight() - getiHeight()- 60);
+                setiY(getGaGame().getiHeight() - getiHeight()- 23);
                 
             }else if(getiY() <= -130){
 

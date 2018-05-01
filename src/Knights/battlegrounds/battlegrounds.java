@@ -27,15 +27,15 @@ public class battlegrounds {
         //obtiene el tamaño de la pantalla del sistema 
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int NumPlayers = 2;
-        while(NumPlayers > 1 && NumPlayers <=4){
+        int NumPlayers = 0;
+        do{
             String whatTheUserEntered = JOptionPane.showInputDialog("Number of players?");
             if (whatTheUserEntered == null) {
                 System.out.println("The user canceled");
             }else{
                 NumPlayers = Integer.parseInt(whatTheUserEntered);
             }
-        }
+        }while(NumPlayers <= 1 && NumPlayers > 4);
         //metodos que empiezan el juego
         Game gamGeometry = new Game("Geometry Battlegrounds",  900, 
                 650, NumPlayers); 
