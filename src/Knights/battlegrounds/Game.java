@@ -59,6 +59,7 @@ public class Game implements Runnable{
     private SoundClip start; //para el sonido de start en la pantalla de inicio
     private Random r; // numero aleatorio para escoger mapa de pelea
     private int random; // para guardar el valor aleatorio
+    private ArrayList<Arena> ArenaFloor;
     
     /**
      * Constructor de Game
@@ -155,6 +156,42 @@ public class Game implements Runnable{
         (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0);
             Players.add(player);  
         }
+         
+        for(int i = 0; i < (getiWidth()/100); i++) {
+           
+            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aArena); 
+            
+            if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+            
+           if(i != 1 && i != 7) {
+                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+        }
         state = STATE.newGame1v1;
         battle1.play();
         battle1.setLooping(true);
@@ -176,6 +213,41 @@ public class Game implements Runnable{
         (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), (2+i)/2);
             Players.add(player);   
         }
+        for(int i = 0; i < (getiWidth()/100); i++) {
+           
+            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aArena); 
+            
+            if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+            
+           if(i != 1 && i != 7) {
+                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+        }
         state = STATE.newGame2v2;
         battle1.play();
         battle1.setLooping(true);
@@ -196,6 +268,41 @@ public class Game implements Runnable{
         Player player = new Player((getiWidth() /2 ) - 100, 
         (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0);
             Players.add(player);   
+        }
+        for(int i = 0; i < (getiWidth()/100); i++) {
+           
+            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aArena); 
+            
+            if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+            
+           if(i != 1 && i != 7) {
+                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 3 && i != 4 && i!= 5 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+           if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
+                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
+           
+            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
+                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
+                ArenaFloor.add(aArena); 
+           }
         }
         state = STATE.newGameFFA;
         battle1.play();
@@ -446,7 +553,9 @@ public class Game implements Runnable{
             Controllers.add(Controller);
         }
         Players = new ArrayList<Player>();
-        aArena = new Arena(iWidth/2-300, iHeight/2-350, 600, 600, this);      
+
+        ArenaFloor = new ArrayList<Arena>(); 
+        
         dispDisplay.getJframe().addKeyListener(KeyManager);
         setStateStart();
     }
@@ -532,7 +641,18 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
-
+                    
+                    //checar con las plataformas
+                    Iterator itr3 = ArenaFloor.iterator();
+                    while(itr3.hasNext()) {
+                    Arena arenaaux = (Arena)itr3.next(); 
+                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
+                        
+                            playeraux.setiY(arenaaux.getiY()-10);
+                            playeraux.setiX(getiWidth()/2); 
+               
+                        }
+                    }   
                 }
             }
         }
@@ -572,6 +692,18 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
+                    
+                    //checar con las plataformas
+                    Iterator itr3 = ArenaFloor.iterator();
+                    while(itr3.hasNext()) {
+                    Arena arenaaux = (Arena)itr3.next(); 
+                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
+                        
+                            playeraux.setiY(arenaaux.getiY()-10);
+                            playeraux.setiX(getiWidth()/2); 
+               
+                        }
+                    }   
 
                 }
             }
@@ -613,6 +745,19 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
+                    
+                    
+                    //checar con las plataformas
+                    Iterator itr3 = ArenaFloor.iterator();
+                    while(itr3.hasNext()) {
+                    Arena arenaaux = (Arena)itr3.next(); 
+                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
+                        
+                            playeraux.setiY(arenaaux.getiY()-10);
+                            playeraux.setiX(getiWidth()/2); 
+               
+                        }
+                    }   
 
                 }
             }
@@ -851,6 +996,14 @@ public class Game implements Runnable{
             //Renders del background dentro del juego y de los players
             if( state == STATE.Game1v1 || state == STATE.Game2v2 || 
                     state == STATE.GameFFA){
+                
+                //dibujar las plataformas
+                Iterator itr2 = ArenaFloor.iterator(); 
+                while(itr2.hasNext()) {
+                    Arena faux = (Arena) itr2.next(); 
+                    faux.render(gGraphics); 
+                }
+                
                 renderBG();
                 renderPlayer();
 
