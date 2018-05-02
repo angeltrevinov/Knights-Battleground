@@ -348,10 +348,12 @@ public class Game implements Runnable{
         paux.setiX(200);
         paux.setiY(826);
         paux.setLives(3);
+        if(iNumPlayers >=2){
         paux = (Player) itr.next();
         paux.setiX(700);
         paux.setiY(826);
         paux.setLives(3);
+        }
         if(iNumPlayers >= 3){
             paux = (Player) itr.next();
             paux.setiX(700);
@@ -1165,7 +1167,7 @@ public class Game implements Runnable{
             
             //render de la pantalla de settings del juego
             if(state == STATE.Settings){
-                
+                gGraphics.drawImage(Assets.imgSettings,0,0,iWidth,iHeight,null);
             }
             
             //render de la pantalla pausa dentro del juego

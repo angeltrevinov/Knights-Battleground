@@ -34,6 +34,7 @@ public class Assets {
     public static BufferedImage imgFightBG2[];
     public static BufferedImage imgFightBG3[];
     public static BufferedImage plataform;      //paa crear plataformas
+    public static BufferedImage imgSettings;
     
     public static BufferedImage DoradoEspadaDer[], DoradoEspadaIzq[],
             DoradoEspadaAtkDer[], DoradoEspadaAtkIzq[], DoradoEspadaDerAtc[], 
@@ -83,6 +84,7 @@ public class Assets {
      */
     public static void init(){
         
+        //sonidos son cargados en su respectiva variable
         menumusic = new SoundClip("/Sounds/menu.wav");
         navigate = new SoundClip("/Sounds/navigate.wav");
         select = new SoundClip("/Sounds/select.wav");
@@ -107,6 +109,7 @@ public class Assets {
         imgwinnerPointerDer = ImageLoader.loadImage("/images/winnerpointer.png");
         imgwinnerPointerIzq = ImageLoader.loadImage("/images/winnerpointer.png");
         plataform = ImageLoader.loadImage("/images/plataform.png");
+        imgSettings = ImageLoader.loadImage("/images/imgSettings.png");
         
         //Sonidos son cargados en su respectiva variable
         select = new SoundClip("/sounds/select.wav");

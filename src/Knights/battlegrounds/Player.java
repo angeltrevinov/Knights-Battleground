@@ -40,7 +40,6 @@ public class Player extends Item {
     private boolean dead; 
     private int team;
     private int Lives;
-    private int DireccionEnemigo;
     
     /**
      * Player
@@ -90,17 +89,8 @@ public class Player extends Item {
         hit = false;
         salud = 0;
         dead = false;
-        DireccionEnemigo = 1;
     }
 
-    public int getDireccionEnemigo() {
-        return DireccionEnemigo;
-    }
-
-    public void setDireccionEnemigo(int DireccionEnemigo) {
-        this.DireccionEnemigo = DireccionEnemigo;
-    }
-    
     public int getTeam() {
         return team;
     }
@@ -271,7 +261,7 @@ public class Player extends Item {
         //gravedad
         
         setiY(getiY() - getVelocidadY());
-        setiX(getiX() + getVelocidadX());
+        setiX(getiX() - getVelocidadX());
         
         
         if(getiY() + getiHeight() + 23 >= getGaGame().getiHeight()){
@@ -285,14 +275,14 @@ public class Player extends Item {
                        
             //mover al jugador en y
             if(getController().getLXYDir() == getController().getNORTH()){ //hacia arriba
-                if(!isBrinco()){
+                if(!brinco){
                     setBrinco(true);
                     setVelocidadY(getVelocidadY()+25);
                     setMoving(false);
                 }
  
             }else{
-                setMoving(true);
+                //setMoving(true);
             }
             if(getController().getLXYDir() == getController().getSOUTH()){//hacia abajo
 
@@ -373,16 +363,43 @@ public class Player extends Item {
             }
             
             //colision con los borden en y 
+            
             if(getiY() + getiHeight()+ 23 >= getGaGame().getiHeight()){ 
-
                 setiY(getGaGame().getiHeight() - getiHeight()- 23);
+                //setBrinco(false);
+                
                 
             }else if(getiY() <= -130){
 
                 setDead(true);
 
-            }
-             
+            }else 
+           
+            if((getiY() + getiHeight() + 135 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 120 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 280) || (getiX() > 540 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 135);
+                setBrinco(false);
+                
+            }else
+                
+            if((getiY() + getiHeight() + 257 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 242 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && 
+                    ((getiX() < 120) || (getiX() > 160 && getiX() < 630) || (getiX() > 690 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 257);
+                setBrinco(false);
+            }else
+                
+             if((getiY() + getiHeight() + 379 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 364 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 280) || (getiX() > 540 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 379);
+                setBrinco(false);  
+             }else
+                
+             if((getiY() + getiHeight() + 501 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 486 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 200) || (getiX() > 605 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 501);
+                setBrinco(false);  
+             }
 
             //por si no se esta moviendo
             if(Controller.getLXYDir() == Controller.getNONE()){
@@ -398,7 +415,7 @@ public class Player extends Item {
             
             //para que se muera
             if(isHit()){
-                setVelocidadX( getDireccionEnemigo() * getSalud()*2 );
+                setVelocidadX( getDirection() * getSalud()*2 );
                 setiY(getiY()  - getSalud()*2);
                 setHit(false);
             }else if(!isHit() && (getTicks() % 7) == 1){
@@ -514,4 +531,4 @@ public class Player extends Item {
         }
         
     }//para render
-}//para toda la clase
+}//para to la clase
