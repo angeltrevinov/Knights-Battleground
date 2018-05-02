@@ -437,6 +437,7 @@ public class Player extends Item {
                 setiX(getGaGame().getiWidth()/2 - 100 * getiTypePlayer());
                 setiY(10);
                 setSalud(0);
+                setBrinco(true);
                 setDead(false);
                 quitarVida();
             }

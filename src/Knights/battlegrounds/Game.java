@@ -60,6 +60,7 @@ public class Game implements Runnable{
     private Random r; // numero aleatorio para escoger mapa de pelea
     private int random; // para guardar el valor aleatorio
     private ArrayList<Arena> ArenaFloor;
+    private int[] LivesTeam;
     
     /**
      * Constructor de Game
@@ -79,6 +80,7 @@ public class Game implements Runnable{
         this.iNumPlayers = iNumPlayers;
         bRunning = false; 
         KeyManager = new KeyManager();
+        LivesTeam = new int[3];
     }
     
     
@@ -136,7 +138,6 @@ public class Game implements Runnable{
     }
     
     public void checkVictory(){
-        System.out.println("gano");
         if(state == STATE.Game1v1){
             Iterator itr = Players.iterator();
             while(itr.hasNext()){
@@ -146,9 +147,36 @@ public class Game implements Runnable{
                 }    
             }
         }else if(state == STATE.Game2v2){
+            Iterator itr = Players.iterator();
+            while(itr.hasNext()){
+                Player playeraux = (Player) itr.next();
+                if(playeraux.getLives() < 1){
+                    LivesTeam[playeraux.getTeam()]++;
+                    itr.remove();
+                    itr = Players.iterator();
+                }
+            }
             
+            for(int i = 1; i <= 2; i++){
+                if(LivesTeam[i] == 2){
+                    setStateVictory();
+                }
+            }
+        
         }else if(state == STATE.GameFFA){
-            
+            int cont=0;
+            Iterator itr = Players.iterator();
+            while(itr.hasNext()){
+                cont++;
+                Player playeraux = (Player) itr.next();
+                if(playeraux.getLives() < 1){
+                    itr.remove();
+                    itr = Players.iterator();
+                }    
+            }
+            if(cont == 1){
+                setStateVictory();
+            }
         }
     }
 
@@ -226,11 +254,7 @@ public class Game implements Runnable{
                 aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
                 ArenaFloor.add(aArena); 
            }
-           
-            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
-                ArenaFloor.add(aArena); 
-           }
+          
         }
         state = STATE.newGame1v1;
         battle1.play();
@@ -267,7 +291,6 @@ public class Game implements Runnable{
         paux.setiX(200);
         paux.setiY(826);
         paux.setLives(3);
-        
         paux = (Player) itr.next();
         paux.setiX(700);
         paux.setiY(826);
@@ -315,10 +338,6 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
-            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
-                ArenaFloor.add(aArena); 
-           }
         }
         state = STATE.newGame2v2;
         battle1.play();
@@ -327,6 +346,7 @@ public class Game implements Runnable{
         int aux = getIntRandom(r);
         System.out.print(aux);
         state = STATE.Game2v2;
+        int[] LivesTeam = {0, 0, 0};
         return aux;
     }
 
@@ -395,10 +415,6 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
-            if(i != 0 && i!= 1 && i!= 7 && i!= 8 && i != 2 && i != 6 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 600, 120, 100, this); 
-                ArenaFloor.add(aArena); 
-           }
         }
         state = STATE.newGameFFA;
         battle1.play();
@@ -747,6 +763,7 @@ public class Game implements Runnable{
             fightanimation.tick();
             fightanimation2.tick();
             fightanimation3.tick();
+            checkVictory();
             itr = Controllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
@@ -787,6 +804,7 @@ public class Game implements Runnable{
             fightanimation.tick();
             fightanimation2.tick();
             fightanimation3.tick();
+            checkVictory();
             itr = Controllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
@@ -969,51 +987,43 @@ public class Game implements Runnable{
           }
         }
         if(state == STATE.Victory){
+            try{
+                Thread.sleep(200);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
             itr = Controllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
                     select.play();
-                            if(getPointery() == 475){
-                                setStateMenu();
-                            }
-                            if(getPointery() == 555){
-                                System.exit(0);
-                            }
-                        try{
-                           Thread.sleep(200);
-                        }catch(InterruptedException e){
-                           e.printStackTrace();
+                    if(getPointery() == 475){
+                        setStateMenu();
+                        Players.clear();
+                    }
+                    if(getPointery() == 555){
+                        System.exit(0);
                     }
                 }
                 if(Controller.getLXYDir() == Controller.getNORTH()){
                     setPointery1Up(80);
                     setPointery2Up(80);
                     if(getPointery() < 400){
-                        setPointery1(550);
-                        setPointery2(550);
+                        setPointery1(555);
+                        setPointery2(555);
                         
                     }
                     
-                        try{
-                           Thread.sleep(200);
-                        }catch(InterruptedException e){
-                           e.printStackTrace();
-                    }
                 }
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(80);
                     setPointery2Down(80);
                     
                     if(getPointery() > 550){
-                        setPointery1(470);
-                        setPointery2(470);
+                        setPointery1(475);
+                        setPointery2(475);
                     }
-                        try{
-                           Thread.sleep(200);
-                        }catch(InterruptedException e){
-                           e.printStackTrace();
-                    }
+             
                 }
             }
             
