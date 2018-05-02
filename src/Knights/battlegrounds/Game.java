@@ -118,7 +118,7 @@ public class Game implements Runnable{
     public void setStatePause(){
         LastState = state;
         state = STATE.Pause;
-        setPointerx(480);
+        setPointerx(505);
         setPointery1(305);
         setPointerx2(295);
         setPointery2(305);
