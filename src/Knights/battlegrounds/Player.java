@@ -39,6 +39,7 @@ public class Player extends Item {
     private int salud;  //su salud
     private boolean dead; 
     private int team;
+    private int Lives;
     
     /**
      * Player
@@ -54,12 +55,13 @@ public class Player extends Item {
      * @param Controller obtiene el control que lo controla
      */
     public Player(int iX, int iY, int iWidth, int iHeight, Game gaGame, int 
-            iTypePlayer, GamePadController Controller, int team){
+            iTypePlayer, GamePadController Controller, int team, int Lives){
         super(iX, iY, iWidth, iHeight, gaGame);
         //dependiendo del tipo de jugador, este sera el sprite
         this.iTypePlayer = iTypePlayer;
         this.Controller = Controller;
         this.team = team;
+        this.Lives = Lives;
         if(iTypePlayer == 0){
             mono = "DoradoEspada";
         }else if(iTypePlayer == 1){
@@ -91,6 +93,14 @@ public class Player extends Item {
 
     public int getTeam() {
         return team;
+    }
+
+    public int getLives() {
+        return Lives;
+    }
+
+    public void setLives(int Lives) {
+        this.Lives = Lives;
     }
 
     public void setTeam(int team) {
@@ -228,6 +238,10 @@ public class Player extends Item {
      */
     public int getiTypePlayer() {
         return iTypePlayer;
+    }
+    
+    public void quitarVida(){
+        this.Lives--;
     }
     
     /**
@@ -387,6 +401,7 @@ public class Player extends Item {
                 setiY(10);
                 setSalud(0);
                 setDead(false);
+                quitarVida();
             }
 
         }

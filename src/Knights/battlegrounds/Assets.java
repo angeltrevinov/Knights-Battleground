@@ -27,6 +27,8 @@ public class Assets {
     public static BufferedImage imgPause;
     public static BufferedImage Settings;
     public static BufferedImage img1v1, img2v2;
+    public static BufferedImage imgwinnerPointerDer, imgwinnerPointerIzq;
+    public static BufferedImage imgVictoria;
     public static BufferedImage imgffa;
     public static BufferedImage imgFightBG[];
     public static BufferedImage imgFightBG2[];
@@ -101,6 +103,9 @@ public class Assets {
         imgffa = ImageLoader.loadImage("/Images/ffa.png");
         imgquit = ImageLoader.loadImage("/images/quitgame.png");
         imgPause = ImageLoader.loadImage("/Images/pausa.png");
+        imgVictoria = ImageLoader.loadImage("/images/winnerscreen.png");
+        imgwinnerPointerDer = ImageLoader.loadImage("/images/winnerpointer.png");
+        imgwinnerPointerIzq = ImageLoader.loadImage("/images/winnerpointer.png");
         plataform = ImageLoader.loadImage("/images/plataform.png");
         
         //Sonidos son cargados en su respectiva variable
@@ -120,7 +125,7 @@ public class Assets {
         imgHighScore = ImageLoader.loadImage("/images/HighScore.png");
         imgNewGame = ImageLoader.loadImage("/images/NEwGame.png");
         Settings = ImageLoader.loadImage("/images/settings.png");
-        img1v1 = ImageLoader.loadImage("/images/1v1.png");
+        img1v1 = ImageLoader.loadImage("/images/1vs1.png");
         imgFightBG = new BufferedImage[8];
         imgFightBG2 = new BufferedImage[4];
         imgFightBG3 = new BufferedImage[32];
@@ -197,6 +202,7 @@ public class Assets {
         CafeAchaDerAtc2 = new BufferedImage[7];
         CafeAchaIzq2 = new BufferedImage[7];
         CafeAchaIzqAtc2 = new BufferedImage[7];
+        
         CafeAchaAtkDer2 = new BufferedImage[8];
         CafeAchaAtkIzq2 = new BufferedImage[8];
 
@@ -262,6 +268,7 @@ public class Assets {
             
             CafeAchaDerAtc[i] = ImageLoader.loadImage("/CafeAcha/CorrerAtcDer_000" + i
                     + ".png");
+            
             CafeAchaIzqAtc[i] = ImageLoader.loadImage("/CafeAcha/CorrerAtcIzq_000" 
 
                     + i + ".png");
@@ -334,7 +341,7 @@ public class Assets {
             return CafeAchaAtkDer;
         }else if(name == "DoradoEspada"){
             return DoradoEspadaAtkDer;
-        }else if(name == "cafeAcha2"){
+        }else if(name == "CafeAcha2"){
             return CafeAchaAtkDer2;
         }else if(name == "DoradoEspada2"){
             return DoradoEspadaAtkDer2;

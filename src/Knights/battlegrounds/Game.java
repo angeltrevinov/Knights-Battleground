@@ -107,7 +107,8 @@ public class Game implements Runnable{
         Pause,
         newGame1v1,
         newGame2v2,
-        newGameFFA
+        newGameFFA,
+        Victory
         
     };
     
@@ -117,7 +118,37 @@ public class Game implements Runnable{
     public void setStatePause(){
         LastState = state;
         state = STATE.Pause;
+        setPointerx(480);
+        setPointery1(305);
+        setPointerx2(295);
+        setPointery2(305);
         
+    }
+    
+    public void setStateVictory(){
+        state = STATE.Victory;
+        setPointerx(505);
+        setPointery1(470);
+        setPointerx2(295);
+        setPointery2(470);
+    }
+    
+    public void checkVictory(){
+        if(state == STATE.Game1v1){
+            Iterator itr = Players.iterator();
+            while(itr.hasNext()){
+                Player playeraux = (Player) itr.next();
+                if(playeraux.getLives() == 0){
+                    setStateVictory();
+                }    
+            }
+        }
+        if(state == STATE.Game2v2){
+            
+        }
+        if(state == STATE.GameFFA){
+            
+        }
     }
 
     public void setStateStart(){
@@ -153,9 +184,19 @@ public class Game implements Runnable{
     public int setStateNewGame1v1(Random r){
         for(int i = 0; i < 2; i++){ //solo crea una lista con los juadores
         Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0);
+        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0,3);
             Players.add(player);  
         }
+        Iterator itr;
+        itr = Players.iterator();
+        Player paux = (Player) itr.next();
+        paux.setiX(200);
+        paux.setiY(826);
+        paux.setLives(3);
+        paux = (Player) itr.next();
+        paux.setiX(700);
+        paux.setiY(100);
+        paux.setLives(3);
          
         for(int i = 0; i < (getiWidth()/100); i++) {
            
@@ -208,10 +249,42 @@ public class Game implements Runnable{
      * @return 
      */
     public int setStateNewGame2v2(Random r){
-        for(int i = 0; i < iNumPlayers; i++){ //solo crea una lista con los juadores    
+         for(int i = 0; i < 2; i++){ //solo crea una lista con los juadores
         Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), (2+i)/2);
-            Players.add(player);   
+        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 1,3);
+            Players.add(player);  
+        }
+         
+          for(int i = 2; i < 4; i++){ //solo crea una lista con los juadores
+              Player player = new Player((getiWidth() /2 ) - 100, 
+              (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i)
+                      ,2,3);
+              Players.add(player);
+        }
+
+        Iterator itr;
+        itr = Players.iterator();
+        Player paux = (Player) itr.next();
+        paux.setiX(200);
+        paux.setiY(826);
+        paux.setLives(3);
+        
+        paux = (Player) itr.next();
+        paux.setiX(700);
+        paux.setiY(826);
+        paux.setLives(3);
+        
+        if(iNumPlayers >= 3){
+            paux = (Player) itr.next();
+            paux.setiX(700);
+            paux.setiY(100);
+            paux.setLives(3);
+        }
+        if(iNumPlayers == 4){
+            paux = (Player) itr.next();
+            paux.setiX(200);
+            paux.setiY(100);
+            paux.setLives(3);
         }
         for(int i = 0; i < (getiWidth()/100); i++) {
            
@@ -264,10 +337,32 @@ public class Game implements Runnable{
      * @return 
      */    
     public int setStateNewGameFFA(Random r){
-        for(int i = 0; i < iNumPlayers; i++){ //solo crea una lista con los juadores    
+    for(int i = 0; i < iNumPlayers; i++){ //solo crea una lista con los juadores
         Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0);
-            Players.add(player);   
+        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0,3);
+            Players.add(player);  
+        }
+        Iterator itr;
+        itr = Players.iterator();
+        Player paux = (Player) itr.next();
+        paux.setiX(200);
+        paux.setiY(826);
+        paux.setLives(3);
+        paux = (Player) itr.next();
+        paux.setiX(700);
+        paux.setiY(826);
+        paux.setLives(3);
+        if(iNumPlayers >= 3){
+            paux = (Player) itr.next();
+            paux.setiX(700);
+            paux.setiY(100);
+            paux.setLives(3);
+        }
+        if(iNumPlayers >= 4){
+            paux = (Player) itr.next();
+            paux.setiX(200);
+            paux.setiY(100);
+            paux.setLives(3);
         }
         for(int i = 0; i < (getiWidth()/100); i++) {
            
@@ -553,7 +648,6 @@ public class Game implements Runnable{
             Controllers.add(Controller);
         }
         Players = new ArrayList<Player>();
-
         ArenaFloor = new ArrayList<Arena>(); 
         
         dispDisplay.getJframe().addKeyListener(KeyManager);
@@ -774,8 +868,46 @@ public class Game implements Runnable{
                         e.printStackTrace();
                     }
                 }
-            }
-            
+                if(Controller.isButtonPressed(Controller.getButtonA())){
+                    if(getPointery() == 305){
+                        QuitPause();
+                    }
+                    if(getPointery() == 365){
+                        setStateMenu();
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getSOUTH()){
+                    setPointery1Down(60);
+                    setPointery2Down(60);
+                    if(getPointery() > 365){
+                       setPointery1(305);
+                       setPointery2(305);
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getNORTH()){
+                    setPointery1Up(60);
+                    setPointery2Up(60);
+                    if(getPointery() < 305){
+                       setPointery1(365);
+                       setPointery2(365);
+                    }
+                    try{
+                        Thread.sleep(200);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }  
         }
         if(state == STATE.Start){
             animationBG.tick();
@@ -865,6 +997,55 @@ public class Game implements Runnable{
 
           }
         }
+        if(state == STATE.Victory){
+            itr = Controllers.iterator();
+            while(itr.hasNext()){
+                GamePadController Controller = (GamePadController) itr.next();
+                if(Controller.isButtonPressed(Controller.getButtonA())){
+                    select.play();
+                            if(getPointery() == 470){
+                                setStateMenu();
+                            }
+                            if(getPointery() == 550){
+                                System.exit(0);
+                            }
+                        try{
+                           Thread.sleep(200);
+                        }catch(InterruptedException e){
+                           e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getNORTH()){
+                    setPointery1Up(80);
+                    setPointery2Up(80);
+                    if(getPointery() < 400){
+                        setPointery1(550);
+                        setPointery2(550);
+                        
+                    }
+                        try{
+                           Thread.sleep(200);
+                        }catch(InterruptedException e){
+                           e.printStackTrace();
+                    }
+                }
+                if(Controller.getLXYDir() == Controller.getSOUTH()){
+                    setPointery1Down(80);
+                    setPointery2Down(80);
+                    if(getPointery() > 550){
+                        setPointery1(470);
+                        setPointery2(470);
+                    }
+                        try{
+                           Thread.sleep(200);
+                        }catch(InterruptedException e){
+                           e.printStackTrace();
+                    }
+                }
+            }
+            
+        }
+        
         if(state == STATE.MENU){
             animationBG.tick();
             itr = Controllers.iterator();
@@ -989,8 +1170,12 @@ public class Game implements Runnable{
             
             //render de la pantalla pausa dentro del juego
             if(state == STATE.Pause){
-                gGraphics.drawImage(Assets.imgPause, 0, 0, iWidth, iHeight, null);
-                
+                gGraphics.drawImage(Assets.imgPause, -72, -35, iWidth + 100, 
+                        iHeight + 100, null);
+                gGraphics.drawImage(Assets.imgPointerDer, iPointerx, iPointery,
+                        50,50,null);
+                gGraphics.drawImage(Assets.imgPointerIzq,iPointerx2, iPointery,
+                        50,50,null);  
             }
             
             //Renders del background dentro del juego y de los players
@@ -1004,6 +1189,15 @@ public class Game implements Runnable{
                     faux.render(gGraphics); 
                 }
                 renderPlayer();
+
+            }
+            if(state == STATE.Victory){
+                gGraphics.drawImage(Assets.imgVictoria, -72, -35, iWidth + 100, 
+                        iHeight + 100, null);
+                gGraphics.drawImage(Assets.imgwinnerPointerDer, iPointerx, iPointery,
+                        50,50,null);
+                gGraphics.drawImage(Assets.imgwinnerPointerIzq, iPointerx2,iPointery2,
+                        50,50,null);
 
             }
             bsBuffer.show();
