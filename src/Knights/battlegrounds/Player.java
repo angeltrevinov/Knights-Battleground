@@ -40,6 +40,7 @@ public class Player extends Item {
     private boolean dead; 
     private int team;
     private int Lives;
+    private int DireccionEnemigo;
     
     /**
      * Player
@@ -89,8 +90,17 @@ public class Player extends Item {
         hit = false;
         salud = 0;
         dead = false;
+        DireccionEnemigo = 1;
     }
 
+    public int getDireccionEnemigo() {
+        return DireccionEnemigo;
+    }
+
+    public void setDireccionEnemigo(int DireccionEnemigo) {
+        this.DireccionEnemigo = DireccionEnemigo;
+    }
+    
     public int getTeam() {
         return team;
     }
@@ -261,7 +271,7 @@ public class Player extends Item {
         //gravedad
         
         setiY(getiY() - getVelocidadY());
-        setiX(getiX() - getVelocidadX());
+        setiX(getiX() + getVelocidadX());
         
         
         if(getiY() + getiHeight() + 23 >= getGaGame().getiHeight()){
@@ -388,7 +398,7 @@ public class Player extends Item {
             
             //para que se muera
             if(isHit()){
-                setVelocidadX( getDirection() * getSalud()*2 );
+                setVelocidadX( getDireccionEnemigo() * getSalud()*2 );
                 setiY(getiY()  - getSalud()*2);
                 setHit(false);
             }else if(!isHit() && (getTicks() % 7) == 1){
