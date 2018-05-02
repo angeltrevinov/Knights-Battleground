@@ -874,6 +874,9 @@ public class Game implements Runnable{
                     }
                     if(getPointery() == 365){
                         setStateMenu();
+                        battle1.stop();
+                        menumusic.play();
+                        Players.clear();   
                     }
                     try{
                         Thread.sleep(200);
