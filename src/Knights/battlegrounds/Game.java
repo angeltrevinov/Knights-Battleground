@@ -730,6 +730,7 @@ public class Game implements Runnable{
                     //interseccion entre objetos
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
+                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }
@@ -781,6 +782,7 @@ public class Game implements Runnable{
                     //interseccion entre objetos
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
+                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }
@@ -834,6 +836,7 @@ public class Game implements Runnable{
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack() && playeraux.getTeam() 
                             != player2.getTeam()){
+                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }
