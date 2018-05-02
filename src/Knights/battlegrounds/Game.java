@@ -739,17 +739,6 @@ public class Game implements Runnable{
                         player2.setHit(true);
                     }
                     
-                    //checar con las plataformas
-                    Iterator itr3 = ArenaFloor.iterator();
-                    while(itr3.hasNext()) {
-                    Arena arenaaux = (Arena)itr3.next(); 
-                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
-                        
-                            playeraux.setiY(arenaaux.getiY()-10);
-                            playeraux.setiX(getiWidth()/2); 
-               
-                        }
-                    }   
                 }
             }
         }
@@ -790,19 +779,6 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
-                    
-                    //checar con las plataformas
-                    Iterator itr3 = ArenaFloor.iterator();
-                    while(itr3.hasNext()) {
-                    Arena arenaaux = (Arena)itr3.next(); 
-                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
-                        
-                            playeraux.setiY(arenaaux.getiY()-10);
-                            playeraux.setiX(getiWidth()/2); 
-               
-                        }
-                    }   
-
                 }
             }
         }
@@ -844,19 +820,6 @@ public class Game implements Runnable{
                     if(player2.getSalud() > 93){
                         player2.setHit(true);
                     }
-                    
-                    
-                    //checar con las plataformas
-                    Iterator itr3 = ArenaFloor.iterator();
-                    while(itr3.hasNext()) {
-                    Arena arenaaux = (Arena)itr3.next(); 
-                        if(playeraux.intersects(arenaaux) && playeraux.getiY() == arenaaux.getiY()-10) {
-                        
-                            playeraux.setiY(arenaaux.getiY()-10);
-                            playeraux.setiX(getiWidth()/2); 
-               
-                        }
-                    }   
 
                 }
             }
