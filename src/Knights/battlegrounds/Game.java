@@ -254,12 +254,7 @@ public class Game implements Runnable{
                 aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
                 ArenaFloor.add(aArena); 
            }
-<<<<<<< HEAD
-           
-           
-=======
-          
->>>>>>> d480fdec8d585d533cbe2f19eb75737794d076a0
+
         }
         state = STATE.newGame1v1;
         battle1.play();
@@ -343,10 +338,7 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
-<<<<<<< HEAD
-            
-=======
->>>>>>> d480fdec8d585d533cbe2f19eb75737794d076a0
+
         }
         state = STATE.newGame2v2;
         battle1.play();
@@ -424,10 +416,7 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
-<<<<<<< HEAD
-           
-=======
->>>>>>> d480fdec8d585d533cbe2f19eb75737794d076a0
+
         }
         state = STATE.newGameFFA;
         battle1.play();
