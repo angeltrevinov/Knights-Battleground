@@ -264,7 +264,7 @@ public class Player extends Item {
         setiX(getiX() - getVelocidadX());
         
         
-        if(getiY() + getiHeight() + 60 >= getGaGame().getiHeight()){
+        if(getiY() + getiHeight() + 23 >= getGaGame().getiHeight()){
             setBrinco(false);
         }else if(isBrinco() && getVelocidadY() >= -6 && (getTicks() % 5) == 1){
             setVelocidadY(getVelocidadY() - 4);
