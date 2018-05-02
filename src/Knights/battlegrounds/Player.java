@@ -275,14 +275,14 @@ public class Player extends Item {
                        
             //mover al jugador en y
             if(getController().getLXYDir() == getController().getNORTH()){ //hacia arriba
-                if(!isBrinco()){
+                if(!brinco){
                     setBrinco(true);
                     setVelocidadY(getVelocidadY()+25);
                     setMoving(false);
                 }
  
             }else{
-                setMoving(true);
+                //setMoving(true);
             }
             if(getController().getLXYDir() == getController().getSOUTH()){//hacia abajo
 
@@ -363,16 +363,43 @@ public class Player extends Item {
             }
             
             //colision con los borden en y 
+            
             if(getiY() + getiHeight()+ 23 >= getGaGame().getiHeight()){ 
-
                 setiY(getGaGame().getiHeight() - getiHeight()- 23);
+                //setBrinco(false);
+                
                 
             }else if(getiY() <= -130){
 
                 setDead(true);
 
-            }
-             
+            }else 
+           
+            if((getiY() + getiHeight() + 135 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 120 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 280) || (getiX() > 540 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 135);
+                setBrinco(false);
+                
+            }else
+                
+            if((getiY() + getiHeight() + 257 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 242 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && 
+                    ((getiX() < 120) || (getiX() > 160 && getiX() < 630) || (getiX() > 690 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 257);
+                setBrinco(false);
+            }else
+                
+             if((getiY() + getiHeight() + 379 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 364 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 280) || (getiX() > 540 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 379);
+                setBrinco(false);  
+             }else
+                
+             if((getiY() + getiHeight() + 501 >= getGaGame().getiHeight()) && getiY() + getiHeight() + 486 <= getGaGame().getiHeight() && 
+                    getVelocidadY() < 0 && ((getiX() < 200) || (getiX() > 605 && getiX() < getGaGame().getiWidth()))){
+                setiY(getGaGame().getiHeight() - getiHeight()- 501);
+                setBrinco(false);  
+             }
 
             //por si no se esta moviendo
             if(Controller.getLXYDir() == Controller.getNONE()){
@@ -504,4 +531,4 @@ public class Player extends Item {
         }
         
     }//para render
-}//para toda la clase
+}//para to la clase
