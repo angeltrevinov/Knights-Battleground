@@ -729,7 +729,6 @@ public class Game implements Runnable{
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
                         player2.setHit(true);
-                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setSalud(player2.getSalud() + 1);
                     }
                     //se muere
@@ -780,7 +779,6 @@ public class Game implements Runnable{
                     //interseccion entre objetos
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack()){
-                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }
@@ -834,7 +832,6 @@ public class Game implements Runnable{
                     if(playeraux != player2 && playeraux.intersects(player2) 
                             && playeraux.isAttack() && playeraux.getTeam() 
                             != player2.getTeam()){
-                        player2.setDireccionEnemigo(playeraux.getDirection());
                         player2.setHit(true);
                         player2.setSalud(player2.getSalud() + 1);
                     }
@@ -1062,16 +1059,12 @@ public class Game implements Runnable{
                     if(getPointery() == 435){
                         setStateModeSelection();
                     }
-                    if(getPointery() == 485){
-                        //aqui iba leaderboard
-                    }
-                    if(getPointery() == 535){
+                    if(getPointery() == 475){
                         setStateSettings();
                     }
-                    if(getPointery() == 585 && state == STATE.MENU){
+                    if(getPointery() == 515){
                         System.exit(0);
-                    }
-                   
+                    }     
                     try{
                         Thread.sleep(200);
                     }catch(InterruptedException e){
@@ -1079,10 +1072,10 @@ public class Game implements Runnable{
                     }
                 }
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
-                    setPointery1Down(50);
-                    setPointery2Down(50);
+                    setPointery1Down(40);
+                    setPointery2Down(40);
                     Assets.navigate.play();
-                    if(getPointery() > 585){
+                    if(getPointery() > 515){
                         setPointery1(435);
                         setPointery2(435);
                     }
@@ -1093,12 +1086,12 @@ public class Game implements Runnable{
                     }
                 }
                 if(Controller.getLXYDir() == Controller.getNORTH()){
-                    setPointery1Up(50);
-                    setPointery2Up(50);
+                    setPointery1Up(40);
+                    setPointery2Up(40);
                     Assets.navigate.play();
                     if(getPointery() < 435){
-                        setPointery1(585);
-                        setPointery2(585);
+                        setPointery1(515);
+                        setPointery2(515);
                     }
                     try{
                         Thread.sleep(200);
@@ -1147,14 +1140,13 @@ public class Game implements Runnable{
                 gGraphics.drawImage(animationBG.getCurrentFrame(), 0, 
                 0, getiWidth(), getiHeight(),null);
                 gGraphics.drawImage(Assets.imgLogo, 0, 0, 900, 300,null);
-                gGraphics.drawImage(Assets.imgNewGame, 200, 315, 500, 300, null);
-                gGraphics.drawImage(Assets.imgHighScore, 220, 350, 470, 300, null);
-                gGraphics.drawImage(Assets.Settings, 200, 400, 500, 320, null);
-                gGraphics.drawImage(Assets.imgquit,260,480,400,250,null);
-                gGraphics.drawImage(Assets.imgPointerIzq, iPointerx, iPointery, 50,50,null);
-                gGraphics.drawImage(Assets.imgPointerDer, iPointerx2,iPointery2, 50,50,null);
-                
-                         
+                gGraphics.drawImage(Assets.imgNewGame, 200, 310, 500, 300, null);
+                gGraphics.drawImage(Assets.Settings, 200, 340, 500, 320, null);
+                gGraphics.drawImage(Assets.imgquit,260,415,400,250,null);
+                gGraphics.drawImage(Assets.imgPointerIzq, iPointerx, iPointery, 
+                        50,50,null);
+                gGraphics.drawImage(Assets.imgPointerDer, iPointerx2,iPointery2, 
+                        50,50,null);     
             }
             
             //render de la pantalla de seleccion de modo de juego
@@ -1163,8 +1155,8 @@ public class Game implements Runnable{
                 0, getiWidth(), getiHeight(),null);
                 gGraphics.drawImage(Assets.imgLogo, 0, 0, 900, 300,null);
                 gGraphics.drawImage(Assets.imgffa,275, 275, 400,300,null);
-                gGraphics.drawImage(Assets.img1v1, 275, 335, 400, 300, null);
-                gGraphics.drawImage(Assets.img2v2, 275, 385, 400,300,null);
+                gGraphics.drawImage(Assets.img1v1, 270, 335, 400, 300, null);
+                gGraphics.drawImage(Assets.img2v2, 270, 395, 400,300,null);
                 gGraphics.drawImage(Assets.imgPointerIzq, iPointerx, iPointery, 50, 50, null);
                 gGraphics.drawImage(Assets.imgPointerDer, iPointerx2, iPointery2, 50, 50, null);
             }
