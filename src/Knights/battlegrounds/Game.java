@@ -136,19 +136,18 @@ public class Game implements Runnable{
     }
     
     public void checkVictory(){
+        System.out.println("gano");
         if(state == STATE.Game1v1){
             Iterator itr = Players.iterator();
             while(itr.hasNext()){
                 Player playeraux = (Player) itr.next();
-                if(playeraux.getLives() == 0){
+                if(playeraux.getLives() < 1){
                     setStateVictory();
                 }    
             }
-        }
-        if(state == STATE.Game2v2){
+        }else if(state == STATE.Game2v2){
             
-        }
-        if(state == STATE.GameFFA){
+        }else if(state == STATE.GameFFA){
             
         }
     }
@@ -707,6 +706,7 @@ public class Game implements Runnable{
             fightanimation3.tick();
             //para checar cada jugador
             itr = Controllers.iterator();
+            checkVictory();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
