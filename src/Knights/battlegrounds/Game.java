@@ -990,7 +990,7 @@ public class Game implements Runnable{
         }
         if(state == STATE.Victory){
             try{
-                Thread.sleep(200);
+                Thread.sleep(50);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
@@ -1015,6 +1015,9 @@ public class Game implements Runnable{
                         setPointery2(555);
                         
                     }
+                    try{
+                        Thread.sleep(50);
+                    } catch (InterruptedException e){}
                     
                 }
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
@@ -1025,6 +1028,9 @@ public class Game implements Runnable{
                         setPointery1(475);
                         setPointery2(475);
                     }
+                    try{
+                        Thread.sleep(50);
+                    } catch (InterruptedException e){}
              
                 }
             }
@@ -1173,17 +1179,6 @@ public class Game implements Runnable{
 
             }
             //renderiar las cabezas de los jugadores
-            if(state == STATE.Game1v1){
-                gGraphics.drawImage(Assets.DoradoEspadaHead, 70, 30, 50, 50, null);
-                gGraphics.drawImage(Assets.DoradoEspada2Head, 200, 30, 50, 50, null);
-            }else if(state == STATE.Game2v2){
-                gGraphics.drawImage(Assets.DoradoEspadaHead, 70, 30, 50, 50, null);
-                gGraphics.drawImage(Assets.DoradoEspada2Head, 200, 30, 50, 50, null);
-                gGraphics.drawImage(Assets.CafeAchaHead, 270, 30, 50, 50, null);
-                gGraphics.drawImage(Assets.CafeAcha2Head, 340, 30, 50, 50, null);
-            }else if (state == STATE.GameFFA){
-                
-            }
             
             
             if(state == STATE.Victory){

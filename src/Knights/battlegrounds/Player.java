@@ -463,12 +463,16 @@ public class Player extends Item {
         gGraphics.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         gGraphics.setColor(Color.white);
         if(iTypePlayer == 0){
+            gGraphics.drawImage(Assets.DoradoEspadaHead, 70, 30, 50, 50, null);
             gGraphics.drawString("Lives: " + String.valueOf(Lives), 50, 20);
         }else if(iTypePlayer == 1){
+            gGraphics.drawImage(Assets.DoradoEspada2Head, 200, 30, 50, 50, null);
             gGraphics.drawString("Lives: " + String.valueOf(Lives), 180, 20);
         }else if(iTypePlayer == 2){
+            gGraphics.drawImage(Assets.CafeAchaHead, 330, 30, 50, 50, null);
             gGraphics.drawString("Lives: " + String.valueOf(Lives), 310, 20);
         }else if(iTypePlayer == 3){
+            gGraphics.drawImage(Assets.CafeAcha2Head, 450, 30, 50, 50, null);
             gGraphics.drawString("Lives: " + String.valueOf(Lives), 440, 20);
         }
             
