@@ -63,6 +63,8 @@ public class Assets {
     
     public static BufferedImage CafeAchaDer2[], CafeAchaIzq2[], CafeAchaAtkDer2[],
             CafeAchaAtkIzq2[], CafeAchaDerAtc2[], CafeAchaIzqAtc2[]; //Arreglo con sprites para animaciones
+    
+    public static BufferedImage DoradoEspadaHead, DoradoEspada2Head, CafeAchaHead, CafeAcha2Head;
 
     
     public static BufferedImage CafeAchaDerParado2, CafeAchaIzqParado2, 
@@ -111,6 +113,11 @@ public class Assets {
         plataform = ImageLoader.loadImage("/images/plataform.png");
         imgSettings = ImageLoader.loadImage("/images/imgSettings.png");
         
+        //cabezas de los jugadores
+        DoradoEspadaHead = ImageLoader.loadImage("/images/DoradoEspadaHead.png");
+        DoradoEspada2Head = ImageLoader.loadImage("/images/DoradoEspada2Head.png");
+        CafeAchaHead = ImageLoader.loadImage("/images/CafeAchaHead.png");
+        CafeAcha2Head = ImageLoader.loadImage("/images/CafeAcha2Head.png");
         //Sonidos son cargados en su respectiva variable
         select = new SoundClip("/sounds/select.wav");
         selectBack = new SoundClip("/sounds/selectback.wav");
