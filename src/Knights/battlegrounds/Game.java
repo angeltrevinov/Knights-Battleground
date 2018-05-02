@@ -80,6 +80,8 @@ public class Game implements Runnable{
         bRunning = false; 
         KeyManager = new KeyManager();
     }
+    
+    
   
  /**
   * Se enumeran los diferentes estados en los que puede estar el juego
@@ -126,11 +128,11 @@ public class Game implements Runnable{
     }
     
     public void setStateVictory(){
+        setPointerx(275);
+        setPointery1(475);
+        setPointerx2(500);
+        setPointery2(475);
         state = STATE.Victory;
-        setPointerx(505);
-        setPointery1(470);
-        setPointerx2(295);
-        setPointery2(470);
     }
     
     public void checkVictory(){
@@ -155,8 +157,6 @@ public class Game implements Runnable{
         state = STATE.Start;
         Assets.menumusic.setLooping(true);
         Assets.menumusic.play();
-
-        
     }
     
     /**
@@ -1006,10 +1006,10 @@ public class Game implements Runnable{
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
                     select.play();
-                            if(getPointery() == 470){
+                            if(getPointery() == 475){
                                 setStateMenu();
                             }
-                            if(getPointery() == 550){
+                            if(getPointery() == 555){
                                 System.exit(0);
                             }
                         try{
@@ -1026,6 +1026,7 @@ public class Game implements Runnable{
                         setPointery2(550);
                         
                     }
+                    
                         try{
                            Thread.sleep(200);
                         }catch(InterruptedException e){
@@ -1035,6 +1036,7 @@ public class Game implements Runnable{
                 if(Controller.getLXYDir() == Controller.getSOUTH()){
                     setPointery1Down(80);
                     setPointery2Down(80);
+                    
                     if(getPointery() > 550){
                         setPointery1(470);
                         setPointery2(470);
