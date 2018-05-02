@@ -1,5 +1,8 @@
 package Knights.battlegrounds;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Iterator;
 
 /*
@@ -410,7 +413,9 @@ public class Player extends Item {
                 setiY(getGaGame().getiHeight() - getiHeight()- 501);
                 setBrinco(false);  
              }
-
+            
+                
+            
             //por si no se esta moviendo
             if(Controller.getLXYDir() == Controller.getNONE()){
 
@@ -443,6 +448,7 @@ public class Player extends Item {
             }
 
         }
+        
     }
     
     /**
@@ -454,7 +460,18 @@ public class Player extends Item {
      */
     @Override
     public void render(Graphics gGraphics) {
-        
+        gGraphics.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        gGraphics.setColor(Color.white);
+        if(iTypePlayer == 0){
+            gGraphics.drawString("Lives: " + String.valueOf(Lives), 50, 20);
+        }else if(iTypePlayer == 1){
+            gGraphics.drawString("Lives: " + String.valueOf(Lives), 180, 20);
+        }else if(iTypePlayer == 2){
+            gGraphics.drawString("Lives: " + String.valueOf(Lives), 310, 20);
+        }else if(iTypePlayer == 3){
+            gGraphics.drawString("Lives: " + String.valueOf(Lives), 440, 20);
+        }
+            
         //animacion de brinco, y ataque con brinco
         if(brinco == true && (getDirection() == -1) && !Attack){
             

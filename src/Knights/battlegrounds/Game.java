@@ -254,7 +254,7 @@ public class Game implements Runnable{
                 aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
                 ArenaFloor.add(aArena); 
            }
-          
+
         }
         state = STATE.newGame1v1;
         battle1.play();
@@ -338,6 +338,7 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
+
         }
         state = STATE.newGame2v2;
         battle1.play();
@@ -415,6 +416,7 @@ public class Game implements Runnable{
                 ArenaFloor.add(aArena); 
            }
            
+
         }
         state = STATE.newGameFFA;
         battle1.play();
@@ -1167,8 +1169,23 @@ public class Game implements Runnable{
                     faux.render(gGraphics); 
                 }
                 renderPlayer();
+                
 
             }
+            //renderiar las cabezas de los jugadores
+            if(state == STATE.Game1v1){
+                gGraphics.drawImage(Assets.DoradoEspadaHead, 70, 30, 50, 50, null);
+                gGraphics.drawImage(Assets.DoradoEspada2Head, 200, 30, 50, 50, null);
+            }else if(state == STATE.Game2v2){
+                gGraphics.drawImage(Assets.DoradoEspadaHead, 70, 30, 50, 50, null);
+                gGraphics.drawImage(Assets.DoradoEspada2Head, 200, 30, 50, 50, null);
+                gGraphics.drawImage(Assets.CafeAchaHead, 270, 30, 50, 50, null);
+                gGraphics.drawImage(Assets.CafeAcha2Head, 340, 30, 50, 50, null);
+            }else if (state == STATE.GameFFA){
+                
+            }
+            
+            
             if(state == STATE.Victory){
                 gGraphics.drawImage(Assets.imgVictoria, -72, -35, iWidth + 100, 
                         iHeight + 100, null);
