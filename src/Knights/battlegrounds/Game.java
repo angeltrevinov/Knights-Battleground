@@ -13,64 +13,109 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * class Game
+ *                  CLASS GAME
  * 
- * Esta clase es la que se encarga de construir y envuelve el juego 
- * esta clase llama a todas las demas clases necesarias
+ * This class constructs and connects all the classes together so the game can work.
  * 
- * @author Angel Odiel Treviño Villanueva A01336559 
- * pongan sus nombres y matriculas
  */
 public class Game implements Runnable{
     
-    private BufferStrategy bsBuffer; //para tener diferentes buffers cuando desplegamos
-    private Graphics gGraphics;         //para pintar los objetos
-    private Display dispDisplay;        //para desplegar el juego
-    private KeyManager KeyManager;    //para utilizar el teclado 
+    /*                          VARIABLES FOR DISPLAY                                                                 */
+    //                                                      //To have differen buffers while displaying
+    private BufferStrategy bsBuffer; 
+    //                                                      //To paint the objects on the screen
+    private Graphics gGraphics;
+    //                                                      //To display the game
+    private Display dispDisplay;                            
+    /*END*/
     
-    String sTitle;                      //titulo de la ventana
-    private int iWidth;                 //anchura de la ventana
-    private int iHeight;                //altura de la ventana
-    private int iNumPlayers;               //numero de jugadores
+    /*VARIABLES FOR THE WINDOW*/
+    //                                                      //The title of the window
+    String sTitle;
+    //                                                      //The width of the window
+    private int iWidth;                 
+    //                                                      //The Height of the window
+    private int iHeight;
+    //                                                      //The number of players
+    private int iNumPlayers;            
+    /*END*/
     
-    private Thread thrThread;           //crear el thread para el juego
-    private boolean bRunning;           //para saber si el juego esta corriendo
+    /*VARIABLES FOR RUNNING*/
+    //                                                      //Creates the Thread for the game
+    private Thread thrThread;           
+    //                                                      //Boolean to see if the game is running
+    private boolean bRunning;           
+    /*                          END                                                                                   */
     
-    private ArrayList<Player> Players;   //para poder utilizar mas de un jugador
-    private ArrayList<GamePadController> Controllers; //varios controles
-    private Arena aArena;               //para crear una arena
+    /*                          ARRAYS OF FOR THE PLAYERS                                                             */
+    //                                                      //The Array with the players
+    private ArrayList<Player> arrPlayers;   
+    //                                                      //The Array with the Controllers
+    private ArrayList<GamePadController> GMPControllers;
+    /*                          END                                                                                   */
     
-    private int iPointery = 435;    //valor incial en y del apuntador 1 del menu
-    private int iPointerx = 250;    //valor incial en x del apuntador 1 del menu
+    //                                                      //creates plataforms
+    private Arena aPlataforms;         
     
-    private int iPointery2 = 435;   //valor incial en y del apuntador 2 del menu
-    private int iPointerx2 = 600;   //valor incial en x del apuntador 2 del menu
+    /*                          POINTERS FOR THE MENU                                                                 */
+    //                                                      //initial value for the pointer in y of the menu
+    private int iPointery = 435;
+    //                                                      //initial value for the pointer in x of the menu
+    private int iPointerx = 250;    
     
-    private Animation animationBG;  //animacion del background del menu
-    private Animation fightanimation; //animacion del mapa de pelea 1
-    private Animation fightanimation2; //animacion del mapa de pelea 2
-    private Animation fightanimation3; //animacion del mapa de pelea 3
-    private SoundClip menumusic;      //para guardar la musica del menu
-    private SoundClip navigate;  //para guardar el sonido de navegacion del menu
-    private SoundClip battle1;   //para guardar la musica de batalla
-    public STATE state, LastState; //estado actual y ultimo estado guardado
-    private SoundClip select;    //para guardar sonido de seleccion
-    private SoundClip selectBack; //para guardar el sonido de retroceso del menu
-    private SoundClip start; //para el sonido de start en la pantalla de inicio
-    private Random r; // numero aleatorio para escoger mapa de pelea
-    private int random; // para guardar el valor aleatorio
+    //                                                      //initial value for the second pointer in y of the menu
+    private int iPointery2 = 435;
+    //                                                      //initial value for the second pointer in x of the menu
+    private int iPointerx2 = 600;  
+    /*                          END                                                                                   */
+    
+    /*                          ASSETS                                                                                */
+    //                                                      //animation for the background of the menu
+    private Animation animationBG;
+    //                                                      //animation for the background of the first stage
+    private Animation fightanimation; 
+    //                                                      //animation for the background of the second stage
+    private Animation fightanimation2;
+    //                                                      //animation for the background of the third stage
+    private Animation fightanimation3; 
+    //                                                      //To store the Background sound of the menu
+    private SoundClip menumusic;      
+    //                                                      //To store the sound for the navigation in the menu
+    private SoundClip navigate;       
+    //                                                      //To store the BG for the battle face 
+    private SoundClip battle1;
+    //                                                      //The Current state of the game
+    public STATE state;
+    //                                                      //The previous state of the game
+    public STATE LastState;  
+    //                                                      //To store the sound of the selection in the menus
+    private SoundClip select;
+    //                                                      //To store the sound for the return in the menu
+    private SoundClip selectBack;
+    //                                                      //The sound for the start in the welcome display 
+    private SoundClip start;
+    /*                          END                                                                                   */
+    
+    //                                                      //A random number that tells in what stage the game is gonna 
+    //                                                      //      take
+    private Random r;
+    //                                                      //Stores the random number
+    private int random;
+    //                                                      //The Array with the Plataforms
     private ArrayList<Arena> ArenaFloor;
+    //                                                      //An Array that is in charge of seeing the lives for the 
+    //                                                      //      teams
     private int[] LivesTeam;
     
     /**
-     * Constructor de Game
+     *          Constructor for the Game
      * 
-     * crea la ventana del juego e indica que el juego todavia no esta corriendo
+     *Creats the game and initializes the window
      * 
-     * @param sTitle indica el titulo de la ventana
-     * @param iWidth indica la anchura de la ventana
-     * @param iHeight indica la altura de la ventana
-     * @param iNumPlayers indica el numero de jugadres que jugaran
+     * @param sTitle                                        The title of the window
+     * @param iWidth                                        The width of the window
+     * @param iHeight                                       The height of the window
+     * @param iNumPlayers                                   The number of players that are gonna play
      */
     public Game(String sTitle, int iWidth, int iHeight, int iNumPlayers){
         
@@ -78,26 +123,30 @@ public class Game implements Runnable{
         this.iWidth = iWidth;
         this.iHeight = iHeight;
         this.iNumPlayers = iNumPlayers;
+        //                                                  //The game its not running yet
         bRunning = false; 
-        KeyManager = new KeyManager();
+        //                                                  //To store the number of teams, 0 is when is Free for All
+        //                                                  //
         LivesTeam = new int[3];
     }
     
     
   
  /**
-  * Se enumeran los diferentes estados en los que puede estar el juego
-  * Menu: menu del juego, donde aparecen las opciones new game, settings, quit game
-  * Start: pantalla de inicio del juego
-  * GameFFA: estado en donde se esta ejecutando el modo todos contra todos
-  * Game2v2: estado en donde se esta ejecutando el modo 2 contra 2
-  * Game1v1: estado en donde se esta ejecutando el modo 1 contra 1 
-  * Settings: estado donde se muestran los controles del juego
-  * ModeSelection: estado en donde se selecciona el modo de juego
-  * Pause: estado de pausa dentro de los modos de juego
-  * newGame1v1: crear un nuevo juego 1 contra 1
-  * newGame2v2: crear un nuevo juego 2 contra 2
-  * newGameFFA: crear un nuevo juego todos contra todos
+  *             ENUM for the STATEs of the Game
+  * 
+  * Menu:               Menu of the game, where the different optione appear
+  * Start:              The first screen the player sees when starting the game
+  * GameFFA:            State where the game mode is Free For ALL
+  * Game2v2:            State where the game mode is 2 vs 2 
+  * Game1v1:            State where the game mode is 1 vs 1 
+  * Settings:          State where it Shows the user the controllers and how to play the game
+  * ModeSelection:      State where the user can select the game mode it wants 
+  * Pause:              State for pause inse the gameplay modes
+  * newGame1v1:         Creates New match for 1 vs 1 
+  * newGame2v2:         Creates New match for 2 vs 2 
+  * newGameFFA:         Creates New match for Free For ALL
+  * Victory:            State where indicates if a player won
   */   
     public enum STATE{
         MENU,
@@ -117,7 +166,10 @@ public class Game implements Runnable{
     };
     
     /**
-     * Pone al juego en estado de pausa y guarda su ultimo estado
+     *          SetStatePause
+     * 
+     * Sets the Game in Pause State 
+     * 
      */
     public void setStatePause(){
         LastState = state;
@@ -129,6 +181,11 @@ public class Game implements Runnable{
         
     }
     
+    /**
+     *          SetStateVictory
+     * 
+     * sets the Game in the Victory State
+     */
     public void setStateVictory(){
         setPointerx(275);
         setPointery1(475);
@@ -137,49 +194,73 @@ public class Game implements Runnable{
         state = STATE.Victory;
     }
     
+    /**
+     *          CheckVictory
+     * 
+     * Method that checks if a player(s) one
+     */
     public void checkVictory(){
+        //                                                  //if the state is 1 vs 1
         if(state == STATE.Game1v1){
-            Iterator itr = Players.iterator();
-            while(itr.hasNext()){
-                Player playeraux = (Player) itr.next();
-                if(playeraux.getLives() < 1){
-                    setStateVictory();
-                }    
-            }
-        }else if(state == STATE.Game2v2){
-            Iterator itr = Players.iterator();
-            while(itr.hasNext()){
-                Player playeraux = (Player) itr.next();
-                if(playeraux.getLives() < 1){
-                    LivesTeam[playeraux.getTeam()]++;
-                    itr.remove();
-                    itr = Players.iterator();
-                }
-            }
             
-            for(int i = 1; i <= 2; i++){
-                if(LivesTeam[i] == 2){
-                    setStateVictory();
-                }
-            }
-        
-        }else if(state == STATE.GameFFA){
-            int cont=0;
-            Iterator itr = Players.iterator();
+            //                                              //checks the lives of all players and see who has no lifes 
+            //                                              //      left
+            Iterator itr = arrPlayers.iterator();
             while(itr.hasNext()){
-                cont++;
                 Player playeraux = (Player) itr.next();
                 if(playeraux.getLives() < 1){
-                    itr.remove();
-                    itr = Players.iterator();
+                    setStateVictory();
                 }    
             }
-            if(cont == 1){
-                setStateVictory();
-            }
+        }else //                                            //if the state is 2 vs 2 
+            if(state == STATE.Game2v2){
+                
+                //                                          //checks the lifes of all playes and see who has no lifes
+                //                                          //      left
+                Iterator itr = arrPlayers.iterator();
+                while(itr.hasNext()){
+                    Player playeraux = (Player) itr.next();
+                    //                                      //if that player is dead, goes to the array with the lifes 
+                    //                                      //      of teams, and assings his team one dead player
+                    if(playeraux.getLives() < 1){
+                        LivesTeam[playeraux.getTeam()]++;
+                        itr.remove();
+                        itr = arrPlayers.iterator();
+                    }
+                }
+                
+                //                                          //if that team has 2 players dead, then they lost
+                for(int i = 1; i <= 2; i++){
+                    if(LivesTeam[i] == 2){
+                        setStateVictory();
+                    }
+                }
+        
+        }else //                                            //if the game mode is Free for ALL
+            if(state == STATE.GameFFA){
+                //                                          //Checks the lifes of all players until just one is left 
+                //                                          //      alive
+                int cont=0;
+                Iterator itr = arrPlayers.iterator();
+                while(itr.hasNext()){
+                    cont++;
+                    Player playeraux = (Player) itr.next();
+                    if(playeraux.getLives() < 1){
+                        itr.remove();
+                        itr = arrPlayers.iterator();
+                    }    
+                }
+                if(cont == 1){
+                    setStateVictory();
+                }
         }
     }
 
+    /**
+     *          SetStateStart
+     * 
+     * sets the game in the Start screen
+     */
     public void setStateStart(){
         state = STATE.Start;
         Assets.menumusic.setLooping(true);
@@ -187,16 +268,21 @@ public class Game implements Runnable{
     }
     
     /**
-     * QuitarPausa
+     *          QuitPause
+     * 
+     * method that quits from the pause menu
      */
     public void QuitPause(){
     state = LastState;
 }
 
     /**
-     * Genera un numero aleatorio entre 0 y 2 y lo regresa
+     *          GetIntRandom
+     * 
+     * Generates a random integer from a random obj between 0 and 3
+     * 
      * @param r
-     * @return 
+     * @return random integer
      */    
     public int getIntRandom(Random r){
         int aux = r.nextInt(3-0) + 0;
@@ -204,18 +290,26 @@ public class Game implements Runnable{
     }
     
     /**
-     * Crea un nuevo juego 1v1 y regresa un numero aleatorio
-     * @param r
-     * @return 
+     *          SetStateNewGame1vs1
+     * 
+     * Creates a new game with the game mode 1 vs 1
+     * 
+     * @param r random object
+     * @return random integer
      */    
     public int setStateNewGame1v1(Random r){
-        for(int i = 0; i < 2; i++){ //solo crea una lista con los juadores
-        Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0,3);
-            Players.add(player);  
+        //                                                  //creates a list with the players
+        for(int i = 0; i < 2; i++){
+            Player player = new Player((getiWidth() /2 ) - 100, (getiHeight() / 2) - 100 * i, 100, 100, this, i, 
+                GMPControllers.get(i), 0,3);
+        
+            arrPlayers.add(player);  
         }
+        
+        //                                                  //sets the players I think it does what the constructor did, 
+        //                                                  //      but arranges the positions
         Iterator itr;
-        itr = Players.iterator();
+        itr = arrPlayers.iterator();
         Player paux = (Player) itr.next();
         paux.setiX(200);
         paux.setiY(826);
@@ -224,69 +318,83 @@ public class Game implements Runnable{
         paux.setiX(700);
         paux.setiY(100);
         paux.setLives(3);
-         
+        
+        //                                                  //Creates the plataforms, this can be done in a single 
+        //                                                  //      method in the future
         for(int i = 0; i < (getiWidth()/100); i++) {
            
-            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
-            ArenaFloor.add(aArena); 
+            aPlataforms =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aPlataforms); 
             
             if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
             
            if(i != 1 && i != 7) {
-                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
 
         }
+        //                                                  //Sets the state to new Game 1 vs 1
         state = STATE.newGame1v1;
+        //                                                  //Starts music
         battle1.play();
         battle1.setLooping(true);
         menumusic.stop();
+        //                                                  //generates random number
         int aux = getIntRandom(r);
         System.out.print(aux);
+        //                                                  //sets the game in 1 vs 1
         state = STATE.Game1v1;
         return aux;
     }
  
     /**
-     * Crea un nuevo juego 2v2 y regresa un numero aleatorio
-     * @param r
-     * @return 
+     *          SetStateNewGame2v2
+     * 
+     * Creates a new game with the game mode 2 vs 2
+     * @param r random object
+     * @return random integer
      */
     public int setStateNewGame2v2(Random r){
-         for(int i = 0; i < 2; i++){ //solo crea una lista con los juadores
-        Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 1,3);
-            Players.add(player);  
+        
+        //                                                  //I believe this can be done with one for
+        //                                                  //Creates a List with the players with one team
+        for(int i = 0; i < 2; i++){
+            Player player = new Player((getiWidth() /2 ) - 100, 
+            (getiHeight() / 2) - 100 * i, 100, 100, this, i, GMPControllers.get(i), 1,3);
+                arrPlayers.add(player);  
         }
-         
-          for(int i = 2; i < 4; i++){ //solo crea una lista con los juadores
-              Player player = new Player((getiWidth() /2 ) - 100, 
-              (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i)
-                      ,2,3);
-              Players.add(player);
+        
+        //                                                  //Creates a List with the players of the other team
+        for(int i = 2; i < 4; i++){
+            Player player = new Player((getiWidth() /2 ) - 100, 
+            (getiHeight() / 2) - 100 * i, 100, 100, this, i, GMPControllers.get(i)
+                    ,2,3);
+            arrPlayers.add(player);
         }
-
+        
+        //                                                  //sets the players I think it does what the constructor did, 
+        //                                                  //      but arranges the positions
         Iterator itr;
-        itr = Players.iterator();
+        itr = arrPlayers.iterator();
         Player paux = (Player) itr.next();
         paux.setiX(200);
         paux.setiY(826);
@@ -308,135 +416,167 @@ public class Game implements Runnable{
             paux.setiY(100);
             paux.setLives(3);
         }
+        
+        //                                                  //Creates the plataforms, this can be done in a single 
+        //                                                  //      method in the future
         for(int i = 0; i < (getiWidth()/100); i++) {
            
-            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
-            ArenaFloor.add(aArena); 
+            aPlataforms =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aPlataforms); 
             
             if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
             
            if(i != 1 && i != 7) {
-                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
 
         }
+        
+        //                                                  //sets the state to creating Game with game mode 2 vs 2 
         state = STATE.newGame2v2;
+        //                                                  //Starts music
         battle1.play();
         battle1.setLooping(true);
         menumusic.stop();
+        //                                                  //Generates random number
         int aux = getIntRandom(r);
         System.out.print(aux);
+        //                                                  //sets the state to game mode 2 vs 2 
         state = STATE.Game2v2;
+        //                                                  //sets the deaths of the teams to 0 
         int[] LivesTeam = {0, 0, 0};
         return aux;
     }
 
     /**
-     * Crea un nuevo juego todos contra todos y regresa un numero aleatorio
-     * @param r
-     * @return 
+     *              SetStateNewGameFFA
+     * 
+     * Creates a new game with the game mode Free For All
+     * @param r random object
+     * @return random integer
      */    
     public int setStateNewGameFFA(Random r){
-    for(int i = 0; i < iNumPlayers; i++){ //solo crea una lista con los juadores
-        Player player = new Player((getiWidth() /2 ) - 100, 
-        (getiHeight() / 2) - 100 * i, 100, 100, this, i, Controllers.get(i), 0,3);
-            Players.add(player);  
+    
+        //                                                  //Creates list with the players
+        for(int i = 0; i < iNumPlayers; i++){ 
+            Player player = new Player((getiWidth() /2 ) - 100, 
+            (getiHeight() / 2) - 100 * i, 100, 100, this, i, GMPControllers.get(i), 0,3);
+                arrPlayers.add(player);  
         }
+        
+        //                                                  //sets the players I think it does what the constructor did, 
+        //                                                  //      but arranges the positions
         Iterator itr;
-        itr = Players.iterator();
+        itr = arrPlayers.iterator();
         Player paux = (Player) itr.next();
         paux.setiX(200);
         paux.setiY(826);
         paux.setLives(3);
         if(iNumPlayers >=2){
-        paux = (Player) itr.next();
-        paux.setiX(700);
-        paux.setiY(826);
-        paux.setLives(3);
+            paux = (Player) itr.next();
+            paux.setiX(700);
+            paux.setiY(826);
+            paux.setLives(3);
         }
+        
         if(iNumPlayers >= 3){
             paux = (Player) itr.next();
             paux.setiX(700);
             paux.setiY(100);
             paux.setLives(3);
         }
+        
         if(iNumPlayers >= 4){
             paux = (Player) itr.next();
             paux.setiX(200);
             paux.setiY(100);
             paux.setLives(3);
         }
+        
+        //                                                  //Creates the plataforms, this can be done in a single 
+        //                                                  //      method in the future
         for(int i = 0; i < (getiWidth()/100); i++) {
            
-            aArena =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
-            ArenaFloor.add(aArena); 
+            aPlataforms =  new Arena(90*i + 30, iHeight - 70, 120, 100, this); 
+            ArenaFloor.add(aPlataforms); 
             
             if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 190, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
             
            if(i != 1 && i != 7) {
-                aArena =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 310, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 3 && i != 4 && i!= 5 ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 430, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
            if(i != 2 && i!= 3 && i!= 4 && i!= 5 && i!= 6  ) {
-                aArena =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
-                ArenaFloor.add(aArena); 
+                aPlataforms =  new Arena(90*i + 30, iHeight - 550, 120, 100, this); 
+                ArenaFloor.add(aPlataforms); 
            }
            
 
         }
+        
+        //                                                  //Sets the state to new Game Free For ALL
         state = STATE.newGameFFA;
+        //                                                  //Starts Music
         battle1.play();
         battle1.setLooping(true);
         menumusic.stop();
+        //                                                  //generates random integer
         int aux = getIntRandom(r);
         System.out.print(aux);
+        //                                                  //Sets the state to Game with game mode Free For ALL 
         state = STATE.GameFFA;
         return aux;
     }
 
     /**
-     * Pone el estado en juego
+     *          SetStateGame
+     * 
+     * sets the state of the game
+     * 
      */    
     public void setStateGame(){
         state = STATE.GAME;
     }
     
     /**
-     * Pone al juego en estado de menu
+     *          setStateMenu
+     * 
+     * sets the state of the game to menu
+     *      
      */    
     public void setStateMenu(){
         state = STATE.MENU;
@@ -448,7 +588,10 @@ public class Game implements Runnable{
     }
 
     /**
-     * pone al juego en estado de seleccion de modo de juego
+     *          SetStateModeSelection
+     * 
+     * sets the state to the mode selection state
+     * 
      */    
     public void setStateModeSelection(){
         state = STATE.ModeSelection;
@@ -459,41 +602,57 @@ public class Game implements Runnable{
     }
 
     /**
-     * se hace render de la animacion de fondo
+     *          renderBG
+     * 
+     * Renders the animation for the background depending on the random number
+     * NOTE: the random variable should be received 
+     * 
      */    
     public void renderBG(){
         if(random == 0){
-        gGraphics.drawImage(fightanimation.getCurrentFrame(), 0, 
-                 0, getiWidth(), getiHeight(),null);                    
+            
+            gGraphics.drawImage(fightanimation.getCurrentFrame(), 0, 0, getiWidth(), getiHeight(),null);
+            
         }else if (random == 1){
-         gGraphics.drawImage(fightanimation2.getCurrentFrame(), 0, 0, 
-                  getiWidth(), getiHeight(), null);    
+            
+            gGraphics.drawImage(fightanimation2.getCurrentFrame(), 0, 0, getiWidth(), getiHeight(), null);  
+            
         }else if ( random == 2){
-         gGraphics.drawImage(fightanimation3.getCurrentFrame(),0,0,
-                  getiWidth(), getiHeight(), null);
+            
+            gGraphics.drawImage(fightanimation3.getCurrentFrame(),0,0, getiWidth(), getiHeight(), null);
+            
         }
     }
     
    /**
-    * se hace render del player
+    *           renderPlayer
+    * 
+    * we render all the players
+    * 
     */    
     public void renderPlayer(){
-         Iterator itr = Players.iterator();
-         while (itr.hasNext()) {
-         Player playeraux = (Player) itr.next();
-         playeraux.render(gGraphics);
-       }   
+        Iterator itr = arrPlayers.iterator();
+        while (itr.hasNext()) {
+            Player playeraux = (Player) itr.next();
+            playeraux.render(gGraphics);
+        }   
     }
 
    /**
-    * se coloca al juego en estado de settings
+    *           SetStateSettings
+    * 
+    * sets the state of the game to settings
+    * 
     */    
     public void setStateSettings(){
         state = STATE.Settings;
     }
 
    /**
-    * set de de la posicion x del apuntador del menu
+    *           setPointerX
+    * 
+    * sets the position in x for the pointer used in the menu 
+    * 
     * @param iaux 
     */    
     public void setPointerx(int iaux){
@@ -501,7 +660,10 @@ public class Game implements Runnable{
     }
     
     /**
-     * set de la posicion x del segundo apuntador del menu
+     *          setPointerX2
+     * 
+     * sets the position in x for the second pointher in the menu
+     * 
      * @param iaux 
      */    
     public void setPointerx2(int iaux){
@@ -509,8 +671,11 @@ public class Game implements Runnable{
     }
  
     /**
-     * para obtener la poscion del apuntador 1 en x
-     * @return <code>int<code> con el valor de la posicion del apuntador 1 en x 
+     *          getPointerx1
+     * 
+     * Getter for the position in x for the first pointer
+     * 
+     * @return <code>int<code> with the value of x for the first pointer 
      */
     public int getPointerx1(){
         return iPointerx;
@@ -578,8 +743,8 @@ public class Game implements Runnable{
      * 
      * @return obtener una lista con todos los GamePads
      */
-    public ArrayList<GamePadController> getControllers() {
-        return Controllers;
+    public ArrayList<GamePadController> getGMPControllers() {
+        return GMPControllers;
     }
     
     /**
@@ -605,15 +770,6 @@ public class Game implements Runnable{
     }
     
     /**
-     * getKeyManager
-     *
-     * @return the Object KeyManager
-     */
-    public KeyManager getKeyManager(){
-        return KeyManager;
-    }
-    
-    /**
      * getiNumPlayers
      * 
      * @return para conseguir el numero de jugadores
@@ -627,8 +783,8 @@ public class Game implements Runnable{
      * 
      * @return consigue los players
      */
-    public ArrayList<Player> getPlayers() {
-        return Players;
+    public ArrayList<Player> getarrPlayers() {
+        return arrPlayers;
     }
     
     /**
@@ -636,8 +792,8 @@ public class Game implements Runnable{
      * 
      * @return regresa la arena
      */
-    public Arena getaArena() {
-        return aArena;
+    public Arena getaPlataforms() {
+        return aPlataforms;
     }
     
     /**
@@ -651,7 +807,7 @@ public class Game implements Runnable{
         Assets.init();
         r = new Random();
         //inicializa los assets 
-        Controllers = new ArrayList<GamePadController>();
+        GMPControllers = new ArrayList<GamePadController>();
         animationBG = new Animation(Assets.imgBackground, 120);
         fightanimation = new Animation(Assets.imgFightBG, 120);
         fightanimation2 = new Animation(Assets.imgFightBG2,60);
@@ -664,12 +820,11 @@ public class Game implements Runnable{
         battle1 = Assets.battle1;
         for(int i = 0; i < iNumPlayers; i++){ //inserta todos los controles necesairos
             GamePadController Controller = new GamePadController(i);
-            Controllers.add(Controller);
+            GMPControllers.add(Controller);
         }
-        Players = new ArrayList<Player>();
+        arrPlayers = new ArrayList<Player>();
         ArenaFloor = new ArrayList<Arena>(); 
         
-        dispDisplay.getJframe().addKeyListener(KeyManager);
         setStateStart();
     }
     
@@ -710,9 +865,8 @@ public class Game implements Runnable{
      * en cada frame
      */
     private void tick(STATE state){
-        getKeyManager().tick();        //el tick del keymanager
         // hace el poll de todos los controlles
-        Iterator itr = Controllers.iterator();
+        Iterator itr = GMPControllers.iterator();
         while(itr.hasNext()){
             GamePadController Controller = (GamePadController) itr.next();
             Controller.poll();
@@ -723,7 +877,7 @@ public class Game implements Runnable{
             fightanimation2.tick();
             fightanimation3.tick();
             //para checar cada jugador
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             checkVictory();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
@@ -736,12 +890,12 @@ public class Game implements Runnable{
                     }
                 }
             }
-            itr = Players.iterator();
+            itr = arrPlayers.iterator();
             while (itr.hasNext()) {
                 Player playeraux = (Player) itr.next();
                 playeraux.tick();
                 //para checar si se estan atacando
-                Iterator itr2 = Players.iterator();
+                Iterator itr2 = arrPlayers.iterator();
                 while(itr2.hasNext()){
 
                     Player player2 = (Player) itr2.next(); 
@@ -766,7 +920,7 @@ public class Game implements Runnable{
             fightanimation2.tick();
             fightanimation3.tick();
             checkVictory();
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
@@ -778,12 +932,12 @@ public class Game implements Runnable{
                     }
                 }
             }
-            itr = Players.iterator();
+            itr = arrPlayers.iterator();
             while (itr.hasNext()) {
                 Player playeraux = (Player) itr.next();
                 playeraux.tick();
                 //para checar si se estan atacando
-                Iterator itr2 = Players.iterator();
+                Iterator itr2 = arrPlayers.iterator();
                 while(itr2.hasNext()){
 
                     Player player2 = (Player) itr2.next(); 
@@ -807,7 +961,7 @@ public class Game implements Runnable{
             fightanimation2.tick();
             fightanimation3.tick();
             checkVictory();
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
@@ -819,12 +973,12 @@ public class Game implements Runnable{
                     }
                 }
             }
-            itr = Players.iterator();
+            itr = arrPlayers.iterator();
             while (itr.hasNext()) {
                 Player playeraux = (Player) itr.next();
                 playeraux.tick();
                 //para checar si se estan atacando
-                Iterator itr2 = Players.iterator();
+                Iterator itr2 = arrPlayers.iterator();
                 while(itr2.hasNext()){
 
                     Player player2 = (Player) itr2.next(); 
@@ -845,7 +999,7 @@ public class Game implements Runnable{
             }
         }
         if(state == STATE.Pause){
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonStart())){
@@ -864,7 +1018,7 @@ public class Game implements Runnable{
                         setStateMenu();
                         battle1.stop();
                         menumusic.play();
-                        Players.clear();   
+                        arrPlayers.clear();   
                     }
                     try{
                         Thread.sleep(200);
@@ -902,7 +1056,7 @@ public class Game implements Runnable{
         }
         if(state == STATE.Start){
             animationBG.tick();
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 //para seleccionar
@@ -919,7 +1073,7 @@ public class Game implements Runnable{
             }
         }
         if(state == STATE.Settings){
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             animationBG.tick();
             while(itr.hasNext()){
             GamePadController Controller = (GamePadController) itr.next();
@@ -931,7 +1085,7 @@ public class Game implements Runnable{
             
         }
         if(state == STATE.ModeSelection){
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             animationBG.tick();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
@@ -994,14 +1148,14 @@ public class Game implements Runnable{
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){
                     select.play();
                     if(getPointery() == 475){
                         setStateMenu();
-                        Players.clear();
+                        arrPlayers.clear();
                     }
                     if(getPointery() == 555){
                         System.exit(0);
@@ -1039,7 +1193,7 @@ public class Game implements Runnable{
         
         if(state == STATE.MENU){
             animationBG.tick();
-            itr = Controllers.iterator();
+            itr = GMPControllers.iterator();
             while(itr.hasNext()){
                 GamePadController Controller = (GamePadController) itr.next();
                 if(Controller.isButtonPressed(Controller.getButtonA())){

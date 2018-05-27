@@ -10,35 +10,46 @@ import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
- * @author Angel Odiel Treviño Villanueva A01336559
- * pongan sus nombres y matriculas
+ *              CLASS BATTLEGROUNDS
+ * 
+ * The one in charge of wrapping everything and creates an object to start the Game.
+ * It also ask for the number of players that should be between 2 and 4. 
+ * 
  */
 public class battlegrounds {
     
     /**
-     * Clase principal
-     * 
-     * Esta es la clase que corre el juego, llama a la clase Game 
-     * 
-     * @param args the command line arguments
+     *          VOID MAIN
      */
     public static void main(String[] args) {
         
-        //obtiene el tamaño de la pantalla del sistema 
-        Toolkit t = Toolkit.getDefaultToolkit();
-        Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int NumPlayers = 0;
+        //                                                  //for the number of players and controlers that are gonna
+        //                                                  //      play for this sessiong
+        int iNumPlayers = 0;
+        
+        /*START-DO-WHILE*/
         do{
-            String whatTheUserEntered = JOptionPane.showInputDialog("Number of players?");
-            if (whatTheUserEntered == null) {
-                System.out.println("The user canceled");
+            String sWhatTheUserEntered = JOptionPane.showInputDialog( 
+                    "How many knights are going to fight? (between 2 and 4 are permited)"
+            );
+            //                                              //if the user cancel the window 
+            if ( sWhatTheUserEntered == null ) {
+                System.out.println("The user canceled the game");
+                System.exit(1);
             }else{
-                NumPlayers = Integer.parseInt(whatTheUserEntered);
+                //                                          //pases the string to integer
+                iNumPlayers = Integer.parseInt( sWhatTheUserEntered );
             }
-        }while(NumPlayers <= 1 && NumPlayers > 4);
-        //metodos que empiezan el juego
-        Game gamGeometry = new Game("Geometry Battlegrounds",  900, 
-                650, NumPlayers); 
+        }while( iNumPlayers <= 1 && iNumPlayers > 4);
+        /*END-DO-WHILE*/
+        
+        //                                                  //method that creates the game, we send:
+        //                                                  //the String with the name of the game,
+        //                                                  //the dimensions of the window ( They are going to be fix )
+        //                                                  //and the int with the number of players 
+        Game gamGeometry = new Game("Geometry Battlegrounds",  900, 650, iNumPlayers);
+        
+        //                                                  //starts the game
         gamGeometry.start();
         
     }
